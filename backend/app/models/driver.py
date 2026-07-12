@@ -12,6 +12,9 @@ class Driver(db.Model):
     safety_score = db.Column(db.Float, default=100.0)
     status = db.Column(db.String(50), nullable=False, default='Available') # 'Available', 'On Trip', 'Off Duty', 'Suspended'
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def to_dict(self):
         return {
             'id': self.id,

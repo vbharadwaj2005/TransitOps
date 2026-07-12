@@ -12,6 +12,9 @@ class MaintenanceLog(db.Model):
     status = db.Column(db.String(50), nullable=False, default='Open') # 'Open', 'Closed'
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     # Relationship
     vehicle = db.relationship('Vehicle', backref=db.backref('maintenance_logs', lazy=True))
 

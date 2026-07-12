@@ -26,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from '../components/ui/table';
+import { Pagination } from '../components/ui/pagination';
 
 const daysInMonth = Array.from({ length: 30 }, (_, i) => i + 1);
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -43,6 +44,10 @@ const Trips = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // Form State (New Trip)
   const [showAddModal, setShowAddModal] = useState(false);
@@ -69,8 +74,9 @@ const Trips = () => {
   const fetchTripsAndAssets = async () => {
     setLoading(true);
     try {
-      const tripRes = await api.get('/trips');
-      setTrips(tripRes.data);
+      const tripRes = await api.get(`/trips?page=${page}&search=${encodeURIComponent(search)}`);
+      setTrips(tripRes.data.data);
+      setTotalPages(tripRes.data.pages);
 
       const vehicleRes = await api.get('/vehicles');
       setVehicles(vehicleRes.data);
@@ -85,8 +91,11 @@ const Trips = () => {
   };
 
   useEffect(() => {
-    fetchTripsAndAssets();
-  }, []);
+    const timer = setTimeout(() => {
+      fetchTripsAndAssets();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [page, search]);
 
   const availableVehicles = vehicles.filter(v => v.status === 'Available');
   const availableDrivers = drivers.filter(d => d.status === 'Available');
@@ -319,7 +328,15 @@ const Trips = () => {
 
       {/* Trips Registry Data Table */}
       <Card className="p-6 mt-6 shadow-lg animate-slide-in-up" style={{ animationDelay: '300ms' }}>
-        <h3 className="font-semibold text-lg mb-4">All Trips Registry</h3>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
+          <h3 className="font-semibold text-lg">All Trips Registry</h3>
+          <Input 
+            placeholder="Search trips (source/dest)..." 
+            value={search} 
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            className="w-full sm:w-64"
+          />
+        </div>
         {loading ? (
           <div className="py-12 text-center text-muted-foreground font-medium">Loading scheduled dispatches...</div>
         ) : trips.length === 0 ? (
@@ -416,6 +433,13 @@ const Trips = () => {
               </TableBody>
             </Table>
           </div>
+        )}
+        {!loading && trips.length > 0 && (
+          <Pagination 
+            currentPage={page} 
+            totalPages={totalPages} 
+            onPageChange={setPage} 
+          />
         )}
       </Card>
 

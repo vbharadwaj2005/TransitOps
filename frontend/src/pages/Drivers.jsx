@@ -7,6 +7,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
 import { Input } from '../components/ui/input';
+import { Pagination } from '../components/ui/pagination';
 
 const Drivers = () => {
   const { hasRole } = useContext(AuthContext);
@@ -16,6 +17,10 @@ const Drivers = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // Form State
   const [showModal, setShowModal] = useState(false);
@@ -31,8 +36,9 @@ const Drivers = () => {
   const fetchDrivers = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/drivers');
-      setDrivers(response.data);
+      const response = await api.get(`/drivers?page=${page}&search=${encodeURIComponent(search)}`);
+      setDrivers(response.data.data);
+      setTotalPages(response.data.pages);
     } catch (err) {
       setError('Failed to fetch driver list.');
     } finally {
@@ -41,8 +47,11 @@ const Drivers = () => {
   };
 
   useEffect(() => {
-    fetchDrivers();
-  }, []);
+    const timer = setTimeout(() => {
+      fetchDrivers();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [page, search]);
 
   const openAddModal = () => {
     setEditingId(null);
@@ -128,20 +137,28 @@ const Drivers = () => {
   return (
     <div className="space-y-6 animate-fade-in pb-10">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight text-foreground">Driver Registry</h2>
           <p className="text-muted-foreground mt-1 font-medium">Manage driver credentials, safety records, and assignments.</p>
         </div>
-        {canModify && (
-          <Button
-            onClick={openAddModal}
-            className="w-full sm:w-auto h-9 text-sm bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:scale-105"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Register Driver
-          </Button>
-        )}
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <Input 
+            placeholder="Search drivers..." 
+            value={search} 
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            className="w-full sm:w-64"
+          />
+          {canModify && (
+            <Button
+              onClick={openAddModal}
+              className="w-full sm:w-auto h-9 text-sm bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:scale-105"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Register Driver
+            </Button>
+          )}
+        </div>
       </div>
 
       {error && (
@@ -244,6 +261,13 @@ const Drivers = () => {
               );
             })}
           </div>
+        )}
+        {!loading && drivers.length > 0 && (
+          <Pagination 
+            currentPage={page} 
+            totalPages={totalPages} 
+            onPageChange={setPage} 
+          />
         )}
       </div>
 

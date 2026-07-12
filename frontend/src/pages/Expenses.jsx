@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { Plus, X, AlertTriangle, Check, DollarSign, Fuel, Filter } from 'lucide-react';
+import { Input } from '../components/ui/input';
+import { Pagination } from '../components/ui/pagination';
 
 const Expenses = () => {
   const { user, hasRole } = useContext(AuthContext);
@@ -14,6 +16,10 @@ const Expenses = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // Filtering
   const [typeFilter, setTypeFilter] = useState('');
@@ -38,8 +44,9 @@ const Expenses = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const expRes = await api.get('/expenses');
-      setExpenses(expRes.data);
+      const expRes = await api.get(`/expenses?page=${page}&search=${encodeURIComponent(search)}${typeFilter ? `&expense_type=${typeFilter}` : ''}`);
+      setExpenses(expRes.data.data);
+      setTotalPages(expRes.data.pages);
 
       const vehicleRes = await api.get('/vehicles');
       setVehicles(vehicleRes.data);
@@ -54,8 +61,11 @@ const Expenses = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [page, search, typeFilter]);
 
   const openFuelModal = () => {
     setFuelVehicleId('');
@@ -131,10 +141,7 @@ const Expenses = () => {
     }
   };
 
-  const filteredExpenses = expenses.filter(e => {
-    return typeFilter ? e.expense_type === typeFilter : true;
-  });
-
+  const filteredExpenses = expenses; // we handle filter via backend now!
   const totalExpenseAmount = filteredExpenses.reduce((sum, e) => sum + e.amount, 0);
 
   return (
@@ -196,22 +203,29 @@ const Expenses = () => {
           </div>
         </div>
 
-        {/* Filter controls */}
-        <div className="md:col-span-2 card p-6 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="md:col-span-2 card p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
             <Filter size={18} strokeWidth={2.5} className="text-slate-500" />
-            <span className="text-sm font-bold text-slate-700">Filter Ledger</span>
+            <span className="text-sm font-bold text-slate-700 whitespace-nowrap">Filter Ledger</span>
           </div>
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-            className="rounded-xl border border-slate-300 bg-slate-50 focus:bg-white py-2 px-4 text-sm font-medium text-slate-800 outline-none focus:border-indigo-500 w-48 focus-ring transition-colors cursor-pointer"
-          >
-            <option value="">All Categories</option>
-            <option value="Fuel">Fuel Logs</option>
-            <option value="Maintenance">Maintenance Costs</option>
-            <option value="Other">Other Expenses</option>
-          </select>
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Input 
+              placeholder="Search expenses..." 
+              value={search} 
+              onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+              className="w-full sm:w-48"
+            />
+            <select
+              value={typeFilter}
+              onChange={(e) => { setTypeFilter(e.target.value); setPage(1); }}
+              className="rounded-xl border border-slate-300 bg-slate-50 focus:bg-white py-2 px-4 text-sm font-medium text-slate-800 outline-none focus:border-indigo-500 w-full sm:w-48 focus-ring transition-colors cursor-pointer"
+            >
+              <option value="">All Categories</option>
+              <option value="Fuel">Fuel Logs</option>
+              <option value="Maintenance">Maintenance Costs</option>
+              <option value="Other">Other Expenses</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -273,6 +287,13 @@ const Expenses = () => {
               </tbody>
             </table>
           </div>
+        )}
+        {!loading && filteredExpenses.length > 0 && (
+          <Pagination 
+            currentPage={page} 
+            totalPages={totalPages} 
+            onPageChange={setPage} 
+          />
         )}
       </div>
 

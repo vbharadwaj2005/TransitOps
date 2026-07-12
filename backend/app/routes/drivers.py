@@ -11,11 +11,24 @@ drivers_bp = Blueprint('drivers', __name__)
 @jwt_required()
 def get_drivers():
     status = request.args.get('status')
+    search = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
     query = Driver.query
+    if search:
+        query = query.filter(db.or_(Driver.name.ilike(f'%{search}%'), Driver.license_number.ilike(f'%{search}%')))
     if status:
         query = query.filter(Driver.status == status)
-    drivers = query.all()
-    return jsonify([d.to_dict() for d in drivers]), 200
+        
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    return jsonify({
+        'data': [d.to_dict() for d in pagination.items],
+        'total': pagination.total,
+        'pages': pagination.pages,
+        'current_page': pagination.page
+    }), 200
 
 @drivers_bp.route('/<int:driver_id>', methods=['GET'])
 @jwt_required()

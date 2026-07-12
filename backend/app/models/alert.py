@@ -10,6 +10,9 @@ class Alert(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True) # If null, it's a global alert
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def to_dict(self):
         return {
             'id': self.id,

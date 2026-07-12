@@ -9,6 +9,9 @@ class User(db.Model):
     role = db.Column(db.String(50), nullable=False) # 'Fleet Manager', 'Driver', 'Safety Officer', 'Financial Analyst'
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 

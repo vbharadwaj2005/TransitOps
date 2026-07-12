@@ -3,6 +3,7 @@ from app.extensions import db
 from app.models.user import User
 from app.models.vehicle import Vehicle
 from app.models.driver import Driver
+from app.models.alert import Alert
 from datetime import date, timedelta
 
 app = create_app()
@@ -41,6 +42,13 @@ with app.app_context():
         d3 = Driver(name='Suspended Sam', license_number='LIC-SAM789', license_category='Commercial', license_expiry_date=date.today() - timedelta(days=10), contact_number='+111222333', safety_score=60.0, status='Suspended')
         db.session.add_all([d1, d2, d3])
         print("Seeded sample drivers.")
+
+    if Alert.query.count() == 0:
+        a1 = Alert(message='Vehicle REG-S01 is due for maintenance next week.', type='warning')
+        a2 = Alert(message='Driver Suspended Sam license expired 10 days ago.', type='critical')
+        a3 = Alert(message='Trip TRP-1002 completed successfully.', type='success')
+        db.session.add_all([a1, a2, a3])
+        print("Seeded sample alerts.")
 
     db.session.commit()
     print("Database seeding completed successfully.")

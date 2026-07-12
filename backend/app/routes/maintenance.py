@@ -12,8 +12,22 @@ maintenance_bp = Blueprint('maintenance', __name__)
 @maintenance_bp.route('', methods=['GET'])
 @jwt_required()
 def get_logs():
-    logs = MaintenanceLog.query.all()
-    return jsonify([l.to_dict() for l in logs]), 200
+    search = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
+    query = MaintenanceLog.query
+    if search:
+        query = query.filter(MaintenanceLog.issue_description.ilike(f'%{search}%'))
+        
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    return jsonify({
+        'data': [l.to_dict() for l in pagination.items],
+        'total': pagination.total,
+        'pages': pagination.pages,
+        'current_page': pagination.page
+    }), 200
 
 @maintenance_bp.route('', methods=['POST'])
 @jwt_required()

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import {
@@ -12,8 +12,12 @@ import {
   LogOut,
   Search,
   Mail,
-  Bell
+  Bell,
+  CheckCircle,
+  AlertTriangle,
+  Info
 } from 'lucide-react';
+import api from '../../services/api';
 import { cn } from '../../lib/utils';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -24,6 +28,57 @@ const Layout = ({ children, actions }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hoveredItem, setHoveredItem] = useState(null);
+  
+  // Alerts State
+  const [alerts, setAlerts] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    fetchAlerts();
+    const interval = setInterval(fetchAlerts, 30000); // Poll every 30s
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchAlerts = async () => {
+    try {
+      const res = await api.get('/alerts');
+      setAlerts(res.data);
+    } catch (err) {
+      console.error('Failed to fetch alerts:', err);
+    }
+  };
+
+  const unreadCount = alerts.filter(a => !a.is_read).length;
+
+  const markAsRead = async (id) => {
+    try {
+      await api.put(`/alerts/${id}/read`);
+      setAlerts(alerts.map(a => a.id === id ? { ...a, is_read: true } : a));
+    } catch (err) {
+      console.error('Failed to mark alert as read');
+    }
+  };
+
+  const markAllAsRead = async () => {
+    try {
+      await api.put('/alerts/read-all');
+      setAlerts(alerts.map(a => ({ ...a, is_read: true })));
+    } catch (err) {
+      console.error('Failed to mark all as read');
+    }
+  };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -153,9 +208,79 @@ const Layout = ({ children, actions }) => {
                 size="icon"
                 className="relative hover:bg-secondary transition-all duration-300 hover:scale-110 h-8 w-8"
               >
-                <Bell className="w-4 h-4" />
-                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-destructive rounded-full animate-pulse" />
+                <Mail className="w-4 h-4" />
               </Button>
+              
+              <div className="relative" ref={dropdownRef}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative hover:bg-secondary transition-all duration-300 hover:scale-110 h-8 w-8"
+                  onClick={() => setShowDropdown(!showDropdown)}
+                >
+                  <Bell className="w-4 h-4" />
+                  {unreadCount > 0 && (
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full animate-pulse flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 flex h-4 w-4">
+                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                         <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive"></span>
+                      </span>
+                    </span>
+                  )}
+                </Button>
+                
+                {showDropdown && (
+                  <div className="absolute right-0 mt-2 w-80 bg-card border border-border rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                    <div className="p-3 border-b border-border flex items-center justify-between bg-muted/50">
+                      <h3 className="font-semibold text-sm">Notifications</h3>
+                      {unreadCount > 0 && (
+                        <button 
+                          onClick={markAllAsRead}
+                          className="text-xs text-primary hover:underline font-medium"
+                        >
+                          Mark all as read
+                        </button>
+                      )}
+                    </div>
+                    <div className="max-h-80 overflow-y-auto">
+                      {alerts.length === 0 ? (
+                        <div className="p-4 text-center text-sm text-muted-foreground">No alerts.</div>
+                      ) : (
+                        alerts.map((alert) => (
+                          <div 
+                            key={alert.id} 
+                            onClick={() => !alert.is_read && markAsRead(alert.id)}
+                            className={cn(
+                              "p-3 border-b border-border last:border-b-0 cursor-pointer transition-colors hover:bg-secondary/50",
+                              !alert.is_read ? "bg-primary/5" : ""
+                            )}
+                          >
+                            <div className="flex gap-3 items-start">
+                              <div className="mt-0.5">
+                                {alert.type === 'warning' && <AlertTriangle className="w-4 h-4 text-yellow-500" />}
+                                {alert.type === 'critical' && <AlertTriangle className="w-4 h-4 text-destructive" />}
+                                {alert.type === 'info' && <Info className="w-4 h-4 text-blue-500" />}
+                                {alert.type === 'success' && <CheckCircle className="w-4 h-4 text-green-500" />}
+                              </div>
+                              <div className="flex-1 space-y-1">
+                                <p className={cn("text-sm font-medium leading-none", !alert.is_read ? "text-foreground" : "text-muted-foreground")}>
+                                  {alert.title}
+                                </p>
+                                <p className="text-xs text-muted-foreground line-clamp-2">
+                                  {alert.message}
+                                </p>
+                              </div>
+                              {!alert.is_read && (
+                                <div className="w-2 h-2 rounded-full bg-primary mt-1" />
+                              )}
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
 
               <div className="flex items-center gap-2 pl-2 md:pl-3 border-l border-border">
                 <Avatar className="w-7 h-7 md:w-8 md:h-8 ring-2 ring-primary/20 transition-all duration-300 hover:ring-primary/40">

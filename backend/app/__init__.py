@@ -26,7 +26,7 @@ def create_app(config_class=Config):
     from app.routes.maintenance import maintenance_bp
     from app.routes.expenses import expenses_bp
     from app.routes.analytics import analytics_bp
-
+    from app.routes.alerts import bp as alerts_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(vehicles_bp, url_prefix='/api/vehicles')
     app.register_blueprint(drivers_bp, url_prefix='/api/drivers')
@@ -34,5 +34,5 @@ def create_app(config_class=Config):
     app.register_blueprint(maintenance_bp, url_prefix='/api/maintenance')
     app.register_blueprint(expenses_bp, url_prefix='/api/expenses')
     app.register_blueprint(analytics_bp, url_prefix='/api/analytics')
-
+    app.register_blueprint(alerts_bp)
     return app

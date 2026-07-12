@@ -15,6 +15,9 @@ class Trip(db.Model):
     fuel_consumed = db.Column(db.Float, nullable=True) # liters
     status = db.Column(db.String(50), nullable=False, default='Draft') # 'Draft', 'Dispatched', 'Completed', 'Cancelled'
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
     # Relationships

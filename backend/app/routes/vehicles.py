@@ -9,17 +9,26 @@ vehicles_bp = Blueprint('vehicles', __name__)
 @vehicles_bp.route('', methods=['GET'])
 @jwt_required()
 def get_vehicles():
-    v_type = request.args.get('type')
-    status = request.args.get('status')
-    
+    search = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
     query = Vehicle.query
+    if search:
+        query = query.filter(db.or_(Vehicle.registration_number.ilike(f'%{search}%'), Vehicle.model.ilike(f'%{search}%')))
     if v_type:
         query = query.filter(Vehicle.type == v_type)
     if status:
         query = query.filter(Vehicle.status == status)
         
-    vehicles = query.all()
-    return jsonify([v.to_dict() for v in vehicles]), 200
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    return jsonify({
+        'data': [v.to_dict() for v in pagination.items],
+        'total': pagination.total,
+        'pages': pagination.pages,
+        'current_page': pagination.page
+    }), 200
 
 @vehicles_bp.route('/<int:vehicle_id>', methods=['GET'])
 @jwt_required()

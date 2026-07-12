@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import api from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { Plus, X, AlertTriangle, Check, Hammer, CheckCircle2 } from 'lucide-react';
+import { Input } from '../components/ui/input';
+import { Pagination } from '../components/ui/pagination';
 
 const Maintenance = () => {
   const { hasRole } = useContext(AuthContext);
@@ -12,6 +14,10 @@ const Maintenance = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // Open Log Form State
   const [showAddModal, setShowAddModal] = useState(false);
@@ -28,8 +34,9 @@ const Maintenance = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const logRes = await api.get('/maintenance');
-      setLogs(logRes.data);
+      const logRes = await api.get(`/maintenance?page=${page}&search=${encodeURIComponent(search)}`);
+      setLogs(logRes.data.data);
+      setTotalPages(logRes.data.pages);
 
       const vehicleRes = await api.get('/vehicles');
       setVehicles(vehicleRes.data);
@@ -41,8 +48,11 @@ const Maintenance = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [page, search]);
 
   // Filter vehicles that can enter maintenance (must not be 'Retired')
   const maintainableVehicles = vehicles.filter(v => v.status !== 'Retired' && v.status !== 'On Trip');
@@ -113,20 +123,28 @@ const Maintenance = () => {
   return (
     <div className="space-y-6 fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Maintenance Logs</h2>
           <p className="text-slate-500 mt-1 font-medium">Schedule servicing, track repair logs, and log operational cost reports.</p>
         </div>
-        {isManager && (
-          <button
-            onClick={openAddModal}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-0.5 transition-all cursor-pointer focus-ring"
-          >
-            <Plus size={18} strokeWidth={2.5} />
-            Open Ticket
-          </button>
-        )}
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <Input 
+            placeholder="Search logs..." 
+            value={search} 
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            className="w-full sm:w-64"
+          />
+          {isManager && (
+            <button
+              onClick={openAddModal}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-0.5 transition-all cursor-pointer focus-ring"
+            >
+              <Plus size={18} strokeWidth={2.5} />
+              Open Ticket
+            </button>
+          )}
+        </div>
       </div>
 
       {error && (
@@ -215,6 +233,13 @@ const Maintenance = () => {
               </tbody>
             </table>
           </div>
+        )}
+        {!loading && logs.length > 0 && (
+          <Pagination 
+            currentPage={page} 
+            totalPages={totalPages} 
+            onPageChange={setPage} 
+          />
         )}
       </div>
 

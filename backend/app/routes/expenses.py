@@ -15,14 +15,26 @@ def get_expenses():
     v_id = request.args.get('vehicle_id')
     exp_type = request.args.get('expense_type')
     
+    search = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    
     query = Expense.query
+    if search:
+        query = query.filter(Expense.description.ilike(f'%{search}%'))
     if v_id:
         query = query.filter(Expense.vehicle_id == v_id)
     if exp_type:
         query = query.filter(Expense.expense_type == exp_type)
         
-    expenses = query.all()
-    return jsonify([e.to_dict() for e in expenses]), 200
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    return jsonify({
+        'data': [e.to_dict() for e in pagination.items],
+        'total': pagination.total,
+        'pages': pagination.pages,
+        'current_page': pagination.page
+    }), 200
 
 @expenses_bp.route('', methods=['POST'])
 @jwt_required()

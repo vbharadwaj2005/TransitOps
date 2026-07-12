@@ -13,8 +13,22 @@ trips_bp = Blueprint('trips', __name__)
 @trips_bp.route('', methods=['GET'])
 @jwt_required()
 def get_trips():
-    trips = Trip.query.all()
-    return jsonify([t.to_dict() for t in trips]), 200
+    search = request.args.get('search', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
+    query = Trip.query
+    if search:
+        query = query.filter(db.or_(Trip.source.ilike(f'%{search}%'), Trip.destination.ilike(f'%{search}%')))
+        
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    return jsonify({
+        'data': [t.to_dict() for t in pagination.items],
+        'total': pagination.total,
+        'pages': pagination.pages,
+        'current_page': pagination.page
+    }), 200
 
 @trips_bp.route('/<int:trip_id>', methods=['GET'])
 @jwt_required()

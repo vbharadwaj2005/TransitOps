@@ -12,6 +12,9 @@ class Vehicle(db.Model):
     acquisition_cost = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(50), nullable=False, default='Available') # 'Available', 'On Trip', 'In Shop', 'Retired'
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def to_dict(self):
         return {
             'id': self.id,

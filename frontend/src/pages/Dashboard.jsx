@@ -44,7 +44,7 @@ const Dashboard = () => {
       setKpis(kpiRes.data);
 
       const vehicleRes = await api.get('/vehicles');
-      setVehicles(vehicleRes.data);
+      setVehicles(vehicleRes.data.data || []);
     } catch (err) {
       setError('Failed to fetch dashboard data. Please try again.');
       console.error(err);

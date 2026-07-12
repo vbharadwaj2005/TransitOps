@@ -10,6 +10,8 @@ vehicles_bp = Blueprint('vehicles', __name__)
 @jwt_required()
 def get_vehicles():
     search = request.args.get('search', '')
+    v_type = request.args.get('type')
+    status = request.args.get('status')
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
 

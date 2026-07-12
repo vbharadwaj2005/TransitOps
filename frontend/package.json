@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@rolldown/binding-linux-x64-gnu": "^1.1.5",
     "axios": "^1.18.1",
     "lucide-react": "^1.24.0",
     "react": "^19.2.7",
@@ -27,6 +26,7 @@
     "oxlint": "^1.71.0",
     "postcss": "^8.5.17",
     "tailwindcss": "^4.3.2",
+    "typescript": "^7.0.2",
     "vite": "^8.1.1"
   }
 }

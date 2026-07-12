@@ -2,13 +2,13 @@ import json
 import unittest
 from datetime import date, timedelta
 from app import create_app
-from app.extensions import db
-from app.models.user import User
-from app.models.vehicle import Vehicle
-from app.models.driver import Driver
-from app.models.trip import Trip
-from app.models.maintenance import MaintenanceLog
-from app.models.expense import FuelLog, Expense
+from extensions import db
+from models.user import User
+from models.vehicle import Vehicle
+from models.driver import Driver
+from models.trip import Trip
+from models.maintenance import MaintenanceLog
+from models.expense import FuelLog, Expense
 
 class TransitOpsBackendTestCase(unittest.TestCase):
     def setUp(self):

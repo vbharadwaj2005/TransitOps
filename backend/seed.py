@@ -1,8 +1,8 @@
 from app import create_app
-from app.extensions import db
-from app.models.user import User
-from app.models.vehicle import Vehicle
-from app.models.driver import Driver
+from extensions import db
+from models.user import User
+from models.vehicle import Vehicle
+from models.driver import Driver
 from datetime import date, timedelta
 
 app = create_app()

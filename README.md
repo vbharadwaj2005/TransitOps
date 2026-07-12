@@ -1,7 +1,5 @@
-Here is the complete, formatted `README.md` content for your repository:
 
-```markdown
-# TransitOps 🚀
+# TransitOps 
 
 **TransitOps** is a premium, full-stack **Smart Transport Operations Platform** designed to manage vehicle fleets, monitor driver rosters, schedule shipping dispatches, log maintenance orders, track operational expenditures, and display real-time performance analytics. 
 
@@ -43,7 +41,6 @@ Built with a robust **Flask (Python) backend** and a high-performance **React + 
 
 ## 📁 Directory Structure
 
-```text
 TransitOps/
 ├── backend/
 │   ├── app/
@@ -102,9 +99,8 @@ TransitOps/
 │   ├── package.json
 │   ├── vite.config.js
 │   └── README.md
-```
 
----
+
 
 ## 🔐 Role-Based Access Control (RBAC)
 
@@ -117,7 +113,7 @@ The platform enforces strict role-based access parameters:
 | **Safety Officer** | View All | CRUD (Drivers Only) | Read-Only | Read-Only | Read-Only | View / Export |
 | **Financial Analyst** | View All | Read-Only | Read-Only | Read-Only | CRUD | View / Export |
 
----
+
 
 ## ⚙️ Mandatory Business Rules
 
@@ -132,7 +128,6 @@ The platform enforces strict role-based access parameters:
    * **Cancelled**: Restores vehicle and driver statuses to `Available`.
 5. **Maintenance Cycles**: Opening a maintenance ticket routes a vehicle to `In Shop`. Closing the log records the expense and returns the vehicle to `Available`.
 
----
 
 ## 📈 Key Formulas Used
 
@@ -145,7 +140,7 @@ The platform enforces strict role-based access parameters:
 * **Vehicle Return on Investment (ROI)**:
   $$\text{Vehicle ROI} = \frac{\sum \text{Trip Revenue} - \left(\text{Total Maintenance Cost} + \text{Total Fuel Cost}\right)}{\text{Acquisition Cost}}$$
 
----
+
 
 ## 🚀 Running the Project Locally
 
@@ -202,4 +197,4 @@ Use the password `transitops123` to log in under any of the default testing acco
 * **Driver**: `driver@transitops.com`
 * **Safety Officer**: `safety@transitops.com`
 * **Financial Analyst**: `analyst@transitops.com`
-```
+

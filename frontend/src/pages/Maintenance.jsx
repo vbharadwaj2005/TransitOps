@@ -39,7 +39,7 @@ const Maintenance = () => {
       setTotalPages(logRes.data.pages);
 
       const vehicleRes = await api.get('/vehicles');
-      setVehicles(vehicleRes.data);
+      setVehicles(vehicleRes.data.data || []);
     } catch (err) {
       setError('Failed to fetch maintenance details.');
     } finally {

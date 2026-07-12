@@ -49,10 +49,10 @@ const Expenses = () => {
       setTotalPages(expRes.data.pages);
 
       const vehicleRes = await api.get('/vehicles');
-      setVehicles(vehicleRes.data);
+      setVehicles(vehicleRes.data.data || []);
 
       const driverRes = await api.get('/drivers');
-      setDrivers(driverRes.data);
+      setDrivers(driverRes.data.data || []);
     } catch (err) {
       setError('Failed to fetch financial data.');
     } finally {

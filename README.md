@@ -157,7 +157,7 @@ The platform enforces strict role-based access parameters:
 
 ---
 
-## 🔑 Sandbox Credentials
+## 🔑 Sandbox Credentials.
 Use the password `transitops123` to log in under any of the default testing accounts:
 * **Fleet Manager**: `manager@transitops.com`
 * **Driver**: `driver@transitops.com`

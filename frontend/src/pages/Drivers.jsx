@@ -126,13 +126,13 @@ const Drivers = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Driver Registry</h2>
-          <p className="text-slate-400 mt-1">Manage driver credentials, safety records, and assignments.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Driver Registry</h2>
+          <p className="text-slate-500 mt-1">Manage driver credentials, safety records, and assignments.</p>
         </div>
         {canModify && (
           <button
             onClick={openAddModal}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md cursor-pointer"
           >
             <Plus size={16} />
             Register Driver
@@ -141,14 +141,14 @@ const Drivers = () => {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-950/20 border border-rose-800/30 text-rose-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm">
           <AlertTriangle size={18} />
           <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/30 text-emerald-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm">
           <Check size={18} />
           <span>{success}</span>
         </div>
@@ -164,9 +164,9 @@ const Drivers = () => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
+            <table className="w-full text-left text-sm text-slate-650">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                <tr className="border-b border-slate-200 text-slate-500 font-semibold">
                   <th className="pb-3">Name</th>
                   <th className="pb-3">License Number</th>
                   <th className="pb-3">Category</th>
@@ -177,23 +177,23 @@ const Drivers = () => {
                   {canModify && <th className="pb-3 text-right">Actions</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {drivers.map((d) => {
                   const expired = isLicenseExpired(d.license_expiry_date);
                   const isLowScore = d.safety_score < 70;
                   return (
-                    <tr key={d.id} className="hover:bg-slate-800/10 transition-colors">
+                    <tr key={d.id} className="hover:bg-slate-50 transition-colors">
                       <td className="py-4">
-                        <div className="font-semibold text-slate-100">{d.name}</div>
+                        <div className="font-semibold text-slate-900">{d.name}</div>
                       </td>
-                      <td className="py-4 font-mono">{d.license_number}</td>
-                      <td className="py-4">{d.license_category}</td>
-                      <td className="py-4">
+                      <td className="py-4 font-mono text-slate-700">{d.license_number}</td>
+                      <td className="py-4 text-slate-700">{d.license_category}</td>
+                      <td className="py-4 text-slate-700">
                         <div className="flex items-center gap-1.5">
                           <span>{new Date(d.license_expiry_date).toLocaleDateString()}</span>
                           {expired && (
                             <span
-                              className="inline-flex items-center gap-1 rounded bg-rose-950/40 px-1.5 py-0.5 text-[10px] font-semibold text-rose-400 border border-rose-800/20"
+                              className="inline-flex items-center gap-1 rounded bg-rose-50 px-1.5 py-0.5 text-[10px] font-semibold text-rose-700 border border-rose-200"
                               title="License Expired"
                             >
                               <AlertOctagon size={10} />
@@ -202,15 +202,15 @@ const Drivers = () => {
                           )}
                         </div>
                       </td>
-                      <td className="py-4 text-slate-400">{d.contact_number}</td>
+                      <td className="py-4 text-slate-500">{d.contact_number}</td>
                       <td className="py-4 text-center">
                         <span
                           className={`font-bold px-2 py-0.5 rounded text-xs ${
                             isLowScore
-                              ? 'bg-rose-950/30 text-rose-400 border border-rose-800/20'
+                              ? 'bg-rose-50 text-rose-700 border border-rose-200'
                               : d.safety_score < 85
-                              ? 'bg-amber-950/30 text-amber-400 border border-amber-800/20'
-                              : 'bg-emerald-950/30 text-emerald-400 border border-emerald-800/20'
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                              : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           }`}
                         >
                           {d.safety_score} / 100
@@ -220,10 +220,10 @@ const Drivers = () => {
                         <span
                           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${
                             d.status === 'Available'
-                              ? 'bg-emerald-950/20 text-emerald-400 border-emerald-800/30'
+                              ? 'bg-emerald-50 text-emerald-700 border-emerald-250'
                               : d.status === 'On Trip'
-                              ? 'bg-indigo-950/20 text-indigo-400 border-indigo-800/30'
-                              : 'bg-rose-950/20 text-rose-400 border-rose-800/30'
+                              ? 'bg-blue-50 text-blue-700 border-blue-250'
+                              : 'bg-rose-50 text-rose-700 border-rose-250'
                           }`}
                         >
                           {d.status}
@@ -234,14 +234,14 @@ const Drivers = () => {
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => openEditModal(d)}
-                              className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40 transition-all"
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-slate-100 transition-all cursor-pointer"
                               title="Edit Driver"
                             >
                               <Edit2 size={16} />
                             </button>
                             <button
                               onClick={() => handleDelete(d.id)}
-                              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800/40 transition-all"
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-slate-100 transition-all cursor-pointer"
                               title="Delete Driver"
                             >
                               <Trash2 size={16} />
@@ -261,15 +261,15 @@ const Drivers = () => {
       {/* CRUD Form Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-[#0c101e] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-slate-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-800">
                 {editingId ? 'Edit Driver Info' : 'Register Operator'}
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-slate-400 hover:text-slate-200 transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -278,7 +278,7 @@ const Drivers = () => {
             {/* Modal Body */}
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                   Full Name *
                 </label>
                 <input
@@ -286,14 +286,14 @@ const Drivers = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="E.g., John Doe"
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     License Number *
                   </label>
                   <input
@@ -301,18 +301,18 @@ const Drivers = () => {
                     value={licenseNumber}
                     onChange={(e) => setLicenseNumber(e.target.value)}
                     placeholder="E.g., LIC-JOHN123"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     License Category
                   </label>
                   <select
                     value={licenseCategory}
                     onChange={(e) => setLicenseCategory(e.target.value)}
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   >
                     <option value="Class A">Class A</option>
                     <option value="Class B">Class B</option>
@@ -324,19 +324,19 @@ const Drivers = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     License Expiry Date *
                   </label>
                   <input
                     type="date"
                     value={licenseExpiryDate}
                     onChange={(e) => setLicenseExpiryDate(e.target.value)}
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Contact Number *
                   </label>
                   <input
@@ -344,7 +344,7 @@ const Drivers = () => {
                     value={contactNumber}
                     onChange={(e) => setContactNumber(e.target.value)}
                     placeholder="E.g., +123456789"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
@@ -352,7 +352,7 @@ const Drivers = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Safety Score (0 - 100)
                   </label>
                   <input
@@ -361,17 +361,17 @@ const Drivers = () => {
                     onChange={(e) => setSafetyScore(e.target.value)}
                     min="0"
                     max="100"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Status
                   </label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   >
                     <option value="Available">Available</option>
                     <option value="On Trip">On Trip</option>
@@ -381,17 +381,17 @@ const Drivers = () => {
               </div>
 
               {/* Submit buttons */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2.5 rounded-lg border border-slate-800 hover:bg-slate-850 hover:text-slate-200 text-sm font-semibold text-slate-400 transition-colors"
+                  className="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-50 hover:text-slate-750 text-sm font-semibold text-slate-500 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-lg shadow-indigo-600/10 transition-colors"
+                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-md transition-colors cursor-pointer"
                 >
                   {editingId ? 'Save Changes' : 'Register Driver'}
                 </button>

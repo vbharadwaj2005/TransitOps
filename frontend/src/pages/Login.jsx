@@ -45,29 +45,25 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#070a13] px-4 py-12 relative overflow-hidden">
-      {/* Background gradients */}
-      <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-indigo-900/10 blur-[150px]" />
-      <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-violet-900/10 blur-[150px]" />
-
-      <div className="w-full max-w-5xl flex flex-col md:flex-row items-stretch rounded-2xl overflow-hidden shadow-2xl border border-slate-800/80 bg-[#0c101e]/85 backdrop-blur-md">
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-12 relative overflow-hidden">
+      <div className="w-full max-w-5xl flex flex-col md:flex-row items-stretch rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-white">
         {/* Left Side: Form */}
-        <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+        <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white">
           <div className="flex items-center gap-3 mb-8">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-400 text-white shadow-lg">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm">
               <Truck size={22} />
             </div>
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-white">TransitOps</h2>
-              <p className="text-xs text-indigo-400 font-semibold uppercase tracking-wider">Operations Control</p>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900">TransitOps</h2>
+              <p className="text-xs text-indigo-600 font-semibold uppercase tracking-wider">Operations Control</p>
             </div>
           </div>
 
-          <h3 className="text-xl font-bold text-slate-200 mb-2">Welcome Back</h3>
-          <p className="text-sm text-slate-400 mb-6">Enter your credentials to access the controller dashboard.</p>
+          <h3 className="text-xl font-bold text-slate-800 mb-2">Welcome Back</h3>
+          <p className="text-sm text-slate-500 mb-6">Enter your credentials to access the controller dashboard.</p>
 
           {error && (
-            <div className="flex items-center gap-2 mb-6 p-4 rounded-xl bg-rose-950/20 border border-rose-800/30 text-rose-400 text-sm">
+            <div className="flex items-center gap-2 mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm">
               <AlertTriangle size={18} className="flex-shrink-0" />
               <span>{error}</span>
             </div>
@@ -75,9 +71,9 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Email Address</label>
+              <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Email Address</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
                   <Mail size={18} />
                 </div>
                 <input
@@ -85,16 +81,16 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="manager@transitops.com"
-                  className="block w-full rounded-xl border border-slate-800 bg-[#070a13]/80 py-3 pl-11 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 outline-none transition-all"
+                  className="block w-full rounded-xl border border-slate-300 bg-white py-3 pl-11 pr-4 text-sm text-slate-950 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 outline-none transition-all"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Password</label>
+              <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
                   <Lock size={18} />
                 </div>
                 <input
@@ -102,7 +98,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="block w-full rounded-xl border border-slate-800 bg-[#070a13]/80 py-3 pl-11 pr-4 text-sm text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 outline-none transition-all"
+                  className="block w-full rounded-xl border border-slate-300 bg-white py-3 pl-11 pr-4 text-sm text-slate-950 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 outline-none transition-all"
                   required
                 />
               </div>
@@ -111,7 +107,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 py-3 px-4 text-sm font-semibold text-white shadow-lg shadow-indigo-600/20 hover:shadow-indigo-500/35 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 py-3 px-4 text-sm font-semibold text-white shadow-md hover:shadow-indigo-600/10 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSubmitting ? 'Signing in...' : 'Sign In to TransitOps'}
             </button>
@@ -119,9 +115,9 @@ const Login = () => {
         </div>
 
         {/* Right Side: Demo Seed Credentials */}
-        <div className="w-full md:w-1/2 p-8 md:p-12 border-t md:border-t-0 md:border-l border-slate-800 bg-slate-900/20 flex flex-col justify-center">
-          <h4 className="text-sm font-bold text-slate-300 uppercase tracking-wider mb-4">Sandbox Credentials</h4>
-          <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+        <div className="w-full md:w-1/2 p-8 md:p-12 border-t md:border-t-0 md:border-l border-slate-200 bg-slate-50 flex flex-col justify-center">
+          <h4 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Sandbox Credentials</h4>
+          <p className="text-xs text-slate-500 mb-6 leading-relaxed">
             Role-Based Access Control is enforced. Click on any sandbox role below to auto-fill its credentials and explore its specific capabilities.
           </p>
 
@@ -135,18 +131,18 @@ const Login = () => {
               <button
                 key={credential.email}
                 onClick={() => fillCredentials(credential.email)}
-                className="w-full text-left p-4 rounded-xl border border-slate-800/80 bg-[#070a13]/30 hover:bg-slate-800/30 hover:border-slate-700/80 transition-all group"
+                className="w-full text-left p-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all group cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-bold text-indigo-400 group-hover:text-indigo-300 transition-colors">
+                  <span className="text-xs font-bold text-indigo-600 group-hover:text-indigo-500 transition-colors">
                     {credential.role}
                   </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800/80 text-slate-500 group-hover:text-slate-300 transition-colors">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-500 group-hover:text-slate-700 transition-colors">
                     Auto-Fill
                   </span>
                 </div>
-                <p className="text-xs font-medium text-slate-300 truncate mb-1">{credential.email}</p>
-                <p className="text-[10px] text-slate-500 group-hover:text-slate-400">{credential.desc}</p>
+                <p className="text-xs font-medium text-slate-800 truncate mb-1">{credential.email}</p>
+                <p className="text-[10px] text-slate-500 group-hover:text-slate-600">{credential.desc}</p>
               </button>
             ))}
           </div>

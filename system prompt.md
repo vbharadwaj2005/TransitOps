@@ -274,22 +274,25 @@ Your analytics engine (backend dashboard endpoint & frontend reports page) must 
 
 To deliver a polished dashboard that engages users immediately, enforce the following style conventions:
 
-### Color Palette (Dark Theme / Glassmorphism)
-- **Primary Background**: Sleek dark grey/blue (e.g., `#0f172a` or `#0b0f19`)
-- **Card Background**: Semi-transparent, glassmorphism card styles (e.g., `rgba(30, 41, 59, 0.7)` with `backdrop-filter: blur(12px)` and a subtle light border `1px solid rgba(255, 255, 255, 0.08)`)
-- **Text Primary**: High-contrast off-white (`#f8fafc`)
-- **Text Secondary**: Soft grey/blue (`#94a3b8`)
-- **Accents**:
-  - **Available / Success**: Vibrant Emerald (`#10b981`)
-  - **On Trip / Active**: Electric Blue/Violet (`#6366f1` or `#3b82f6`)
-  - **In Shop / Maintenance**: Amber (`#f59e0b`)
-  - **Retired / Suspended / Cancelled / Alert**: Rose/Crimson (`#ef4444`)
+### Color Palette (Light B2B SaaS Theme)
+- **Primary Background**: Clean, neutral off-white (e.g., `#f8fafc` / `slate-50`)
+- **Card/Container Background**: Pure white (`#ffffff`) with a crisp border (`1px solid #e2e8f0` / `border-slate-200`) and a very soft shadow (`shadow-sm`)
+- **Text Primary**: Deep slate (`#0f172a` / `text-slate-900`)
+- **Text Secondary**: Soft grey/blue (`#64748b` / `text-slate-500`)
+- **Accents & CTAs**: Professional Indigo (`#4f46e5` / `bg-indigo-600` / `hover:bg-indigo-500`)
+- **Status Indicators (Pill Badges)**:
+  - **Available**: Emerald (`bg-emerald-50 text-emerald-700 border-emerald-200`)
+  - **On Trip / Dispatched / Active**: Blue (`bg-blue-50 text-blue-700 border-blue-200`)
+  - **In Shop / Open Repair / Maintenance**: Amber (`bg-amber-50 text-amber-700 border-amber-200`)
+  - **Retired / Suspended / Cancelled / Alert**: Rose (`bg-rose-50 text-rose-700 border-rose-200`)
 
 ### UI Components & Polish
-- **KPI Cards**: Feature dynamic hover transitions (`transform: translateY(-4px)`, `box-shadow: 0 10px 20px rgba(0,0,0,0.3)`). Include clear, visual icons (Lucide React) color-coded to their status.
-- **Charts**: Use smooth tooltips and gradient fills in Recharts line/area charts.
-- **Modals & Dialogs**: Create overlay fades with backdrop blur effects.
-- **Badges**: Use pill badges with glowing text shadows or custom opacities to indicate statuses.
+- **KPI Cards**: Feature clean layouts, neutral numbers, and soft colored icons (e.g., Indigo / Emerald text on very light backgrounds). Include clear, visual icons (Lucide React) color-coded to their status.
+- **Charts**: Use clean tooltips with white backgrounds and gray borders, and professional grid lines.
+- **Modals & Dialogs**: Create pure white containers with thin borders, background overlays (`bg-black/60`), and smooth backdrop blur effects.
+- **Buttons**:
+  - **Primary**: Professional Indigo with `shadow-md` and smooth hover transitions.
+  - **Secondary/Secondary Actions**: Clean white buttons with thin slate borders and hover background changes.
 - **Typography**: Apply a premium sans-serif font (e.g., `'Inter'`, `'Outfit'`, or `'Plus Jakarta Sans'`) with strict hierarchy.
 
 ---

@@ -183,13 +183,13 @@ const Trips = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Trip Planner</h2>
-          <p className="text-slate-400 mt-1">Schedule cargo dispatches, transition statuses, and log metrics.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Trip Planner</h2>
+          <p className="text-slate-500 mt-1">Schedule cargo dispatches, transition statuses, and log metrics.</p>
         </div>
         {isManager && (
           <button
             onClick={openAddModal}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md cursor-pointer"
           >
             <Plus size={16} />
             Plan Trip
@@ -198,14 +198,14 @@ const Trips = () => {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-950/20 border border-rose-800/30 text-rose-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm">
           <AlertTriangle size={18} />
           <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/30 text-emerald-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm">
           <Check size={18} />
           <span>{success}</span>
         </div>
@@ -221,9 +221,9 @@ const Trips = () => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
+            <table className="w-full text-left text-sm text-slate-650">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                <tr className="border-b border-slate-200 text-slate-500 font-semibold">
                   <th className="pb-3">Route</th>
                   <th className="pb-3">Vehicle</th>
                   <th className="pb-3">Driver</th>
@@ -234,38 +234,38 @@ const Trips = () => {
                   <th className="pb-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {trips.map((t) => (
-                  <tr key={t.id} className="hover:bg-slate-800/10 transition-colors">
+                  <tr key={t.id} className="hover:bg-slate-50 transition-colors">
                     <td className="py-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-100">{t.source}</span>
-                        <ArrowRight size={14} className="text-indigo-400" />
-                        <span className="font-semibold text-slate-100">{t.destination}</span>
+                        <span className="font-semibold text-slate-900">{t.source}</span>
+                        <ArrowRight size={14} className="text-indigo-600" />
+                        <span className="font-semibold text-slate-900">{t.destination}</span>
                       </div>
                     </td>
                     <td className="py-4">
                       <div className="text-xs">
-                        <p className="font-semibold text-slate-200">{t.vehicle_reg}</p>
+                        <p className="font-semibold text-slate-900">{t.vehicle_reg}</p>
                         <p className="text-slate-500">{t.vehicle_model}</p>
                       </div>
                     </td>
                     <td className="py-4">
-                      <p className="font-semibold text-slate-200">{t.driver_name}</p>
+                      <p className="font-semibold text-slate-900">{t.driver_name}</p>
                     </td>
-                    <td className="py-4">{t.cargo_weight} kg</td>
-                    <td className="py-4">{t.planned_distance} km</td>
-                    <td className="py-4 font-mono text-emerald-400">${t.revenue?.toLocaleString()}</td>
+                    <td className="py-4 text-slate-700">{t.cargo_weight} kg</td>
+                    <td className="py-4 text-slate-700">{t.planned_distance} km</td>
+                    <td className="py-4 font-mono font-semibold text-emerald-700">${t.revenue?.toLocaleString()}</td>
                     <td className="py-4 text-center">
                       <span
                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${
                           t.status === 'Draft'
-                            ? 'bg-slate-800/50 text-slate-400 border-slate-700/65'
+                            ? 'bg-slate-100 text-slate-700 border-slate-200'
                             : t.status === 'Dispatched'
-                            ? 'bg-indigo-950/20 text-indigo-400 border-indigo-800/30'
+                            ? 'bg-blue-50 text-blue-700 border-blue-200'
                             : t.status === 'Completed'
-                            ? 'bg-emerald-950/20 text-emerald-400 border-emerald-800/30'
-                            : 'bg-rose-950/20 text-rose-400 border-rose-800/30'
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            : 'bg-rose-50 text-rose-700 border-rose-200'
                         }`}
                       >
                         {t.status}
@@ -276,7 +276,7 @@ const Trips = () => {
                         {t.status === 'Draft' && isManager && (
                           <button
                             onClick={() => handleDispatch(t.id)}
-                            className="flex items-center gap-1 px-3 py-1 rounded bg-indigo-600/90 hover:bg-indigo-500 text-xs font-semibold text-white transition-colors"
+                            className="flex items-center gap-1 px-3 py-1 rounded bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition-colors cursor-pointer shadow-sm"
                           >
                             <Play size={12} />
                             Dispatch
@@ -286,21 +286,21 @@ const Trips = () => {
                           <>
                             <button
                               onClick={() => openCompleteModal(t)}
-                              className="flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-600/90 hover:bg-emerald-500 text-xs font-semibold text-white transition-colors"
+                              className="flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-650 hover:bg-emerald-600 text-xs font-semibold text-white transition-colors cursor-pointer shadow-sm"
                             >
                               <CheckCircle2 size={12} />
                               Complete
                             </button>
                             <button
                               onClick={() => handleCancel(t.id)}
-                              className="flex items-center gap-1 px-2.5 py-1 rounded bg-rose-600/90 hover:bg-rose-500 text-xs font-semibold text-white transition-colors"
+                              className="flex items-center gap-1 px-2.5 py-1 rounded bg-rose-600 hover:bg-rose-550 text-xs font-semibold text-white transition-colors cursor-pointer shadow-sm"
                             >
                               Cancel
                             </button>
                           </>
                         )}
                         {(t.status === 'Completed' || t.status === 'Cancelled') && (
-                          <span className="text-xs text-slate-500 italic">No actions</span>
+                          <span className="text-xs text-slate-400 italic">No actions</span>
                         )}
                       </div>
                     </td>
@@ -315,12 +315,12 @@ const Trips = () => {
       {/* PLAN TRIP MODAL */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-[#0c101e] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-slate-200">Plan New Dispatch</h3>
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-800">Plan New Dispatch</h3>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="text-slate-400 hover:text-slate-200 transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -329,35 +329,35 @@ const Trips = () => {
             <form onSubmit={handleCreateTrip} className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Source *</label>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Source *</label>
                   <input
                     type="text"
                     value={source}
                     onChange={(e) => setSource(e.target.value)}
                     placeholder="Warehouse A"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Destination *</label>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Destination *</label>
                   <input
                     type="text"
                     value={destination}
                     onChange={(e) => setDestination(e.target.value)}
                     placeholder="Retail Outlet B"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Assign Vehicle *</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Assign Vehicle *</label>
                 <select
                   value={vehicleId}
                   onChange={(e) => setVehicleId(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 >
                   <option value="">Select Available Vehicle...</option>
@@ -370,11 +370,11 @@ const Trips = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Assign Driver *</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Assign Driver *</label>
                 <select
                   value={driverId}
                   onChange={(e) => setDriverId(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 >
                   <option value="">Select Available Driver...</option>
@@ -388,54 +388,54 @@ const Trips = () => {
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Cargo Weight (kg) *</label>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Cargo Weight (kg) *</label>
                   <input
                     type="number"
                     value={cargoWeight}
                     onChange={(e) => setCargoWeight(e.target.value)}
                     placeholder="E.g., 200"
                     min="1"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Distance (km) *</label>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Distance (km) *</label>
                   <input
                     type="number"
                     value={plannedDistance}
                     onChange={(e) => setPlannedDistance(e.target.value)}
                     placeholder="E.g., 120"
                     min="1"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Est. Revenue ($) *</label>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Est. Revenue ($) *</label>
                   <input
                     type="number"
                     value={revenue}
                     onChange={(e) => setRevenue(e.target.value)}
                     placeholder="E.g., 400"
                     min="0"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2.5 rounded-lg border border-slate-800 hover:bg-slate-850 hover:text-slate-200 text-sm font-semibold text-slate-400 transition-colors"
+                  className="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-50 hover:text-slate-700 text-sm font-semibold text-slate-500 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-lg shadow-indigo-600/10 transition-colors"
+                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-md transition-colors cursor-pointer"
                 >
                   Draft Trip
                 </button>
@@ -448,24 +448,24 @@ const Trips = () => {
       {/* COMPLETE TRIP LOGS MODAL */}
       {showCompleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-[#0c101e] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-slate-200">Log Trip Metrics & Complete</h3>
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-800">Log Trip Metrics & Complete</h3>
               <button
                 onClick={() => setShowCompleteModal(false)}
-                className="text-slate-400 hover:text-slate-200 transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
             </div>
 
             <form onSubmit={handleCompleteTrip} className="p-6 space-y-4">
-              <div className="p-4 rounded-lg bg-indigo-950/20 border border-indigo-850 text-slate-400 text-xs leading-relaxed">
+              <div className="p-4 rounded-lg bg-indigo-50 border border-indigo-200 text-slate-600 text-xs leading-relaxed">
                 Completing this trip requires logging operational costs. A fuel log will be auto-generated along with corresponding expense ledgers.
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                   Final Odometer Reading (km) * (Must exceed start: {selectedTripCurrentOdo} km)
                 </label>
                 <input
@@ -473,14 +473,14 @@ const Trips = () => {
                   value={finalOdo}
                   onChange={(e) => setFinalOdo(e.target.value)}
                   placeholder={`E.g., ${selectedTripCurrentOdo + 100}`}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-355 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Fuel Consumed (Liters) *</label>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Fuel Consumed (Liters) *</label>
                   <input
                     type="number"
                     value={fuelConsumed}
@@ -488,12 +488,12 @@ const Trips = () => {
                     placeholder="E.g., 15"
                     min="0.1"
                     step="0.01"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-355 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Fuel Cost ($) *</label>
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Fuel Cost ($) *</label>
                   <input
                     type="number"
                     value={fuelCost}
@@ -501,23 +501,23 @@ const Trips = () => {
                     placeholder="E.g., 30"
                     min="0.01"
                     step="0.01"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-355 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowCompleteModal(false)}
-                  className="px-4 py-2.5 rounded-lg border border-slate-800 hover:bg-slate-850 hover:text-slate-200 text-sm font-semibold text-slate-400 transition-colors"
+                  className="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-50 hover:text-slate-700 text-sm font-semibold text-slate-500 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-sm font-semibold text-white shadow-lg shadow-emerald-600/10 transition-colors"
+                  className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-550 text-sm font-semibold text-white shadow-md transition-colors cursor-pointer"
                 >
                   Complete Trip
                 </button>

@@ -115,13 +115,13 @@ const Maintenance = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Maintenance Logs</h2>
-          <p className="text-slate-400 mt-1">Schedule servicing, track repair logs, and log operational cost reports.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Maintenance Logs</h2>
+          <p className="text-slate-500 mt-1">Schedule servicing, track repair logs, and log operational cost reports.</p>
         </div>
         {isManager && (
           <button
             onClick={openAddModal}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md cursor-pointer"
           >
             <Plus size={16} />
             Open Ticket
@@ -130,14 +130,14 @@ const Maintenance = () => {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-950/20 border border-rose-800/30 text-rose-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm">
           <AlertTriangle size={18} />
           <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/30 text-emerald-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm">
           <Check size={18} />
           <span>{success}</span>
         </div>
@@ -153,9 +153,9 @@ const Maintenance = () => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
+            <table className="w-full text-left text-sm text-slate-650">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                <tr className="border-b border-slate-200 text-slate-500 font-semibold">
                   <th className="pb-3">Vehicle</th>
                   <th className="pb-3">Issue Description</th>
                   <th className="pb-3">Start Date</th>
@@ -165,31 +165,31 @@ const Maintenance = () => {
                   {isManager && <th className="pb-3 text-right">Actions</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-800/10 transition-colors">
+                  <tr key={log.id} className="hover:bg-slate-50 transition-colors">
                     <td className="py-4">
                       <div className="text-xs">
-                        <p className="font-semibold text-slate-200">{log.vehicle_reg}</p>
+                        <p className="font-semibold text-slate-900">{log.vehicle_reg}</p>
                         <p className="text-slate-500">{log.vehicle_model}</p>
                       </div>
                     </td>
-                    <td className="py-4 font-medium text-slate-200 max-w-xs truncate" title={log.issue_description}>
+                    <td className="py-4 font-medium text-slate-900 max-w-xs truncate" title={log.issue_description}>
                       {log.issue_description}
                     </td>
-                    <td className="py-4">{new Date(log.start_date).toLocaleDateString()}</td>
-                    <td className="py-4">
+                    <td className="py-4 text-slate-700">{new Date(log.start_date).toLocaleDateString()}</td>
+                    <td className="py-4 text-slate-700">
                       {log.end_date ? new Date(log.end_date).toLocaleDateString() : <span className="text-slate-500 italic">In Progress</span>}
                     </td>
-                    <td className="py-4 text-right font-mono">
+                    <td className="py-4 text-right font-mono text-slate-700">
                       {log.cost !== null ? `$${log.cost.toLocaleString()}` : <span className="text-slate-500 italic">-</span>}
                     </td>
                     <td className="py-4 text-center">
                       <span
                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${
                           log.status === 'Open'
-                            ? 'bg-amber-950/20 text-amber-400 border-amber-800/30'
-                            : 'bg-emerald-950/20 text-emerald-400 border-emerald-800/30'
+                            ? 'bg-amber-50 text-amber-700 border-amber-200'
+                            : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                         }`}
                       >
                         {log.status === 'Open' ? 'Active Repair' : 'Closed'}
@@ -200,13 +200,13 @@ const Maintenance = () => {
                         {log.status === 'Open' ? (
                           <button
                             onClick={() => openCloseModal(log.id)}
-                            className="flex items-center justify-end gap-1 px-3 py-1 rounded bg-indigo-650 hover:bg-indigo-550 text-xs font-semibold text-white ml-auto transition-colors"
+                            className="flex items-center justify-end gap-1 px-3 py-1 rounded bg-indigo-650 hover:bg-indigo-600 text-xs font-semibold text-white ml-auto transition-colors cursor-pointer shadow-sm"
                           >
                             <CheckCircle2 size={12} />
                             Complete Service
                           </button>
                         ) : (
-                          <span className="text-xs text-slate-500 italic">Closed</span>
+                          <span className="text-xs text-slate-400 italic">Closed</span>
                         )}
                       </td>
                     )}
@@ -221,12 +221,12 @@ const Maintenance = () => {
       {/* OPEN TICKET MODAL */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-[#0c101e] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-slate-200">Open Maintenance Ticket</h3>
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-800">Open Maintenance Ticket</h3>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="text-slate-400 hover:text-slate-200 transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -234,11 +234,11 @@ const Maintenance = () => {
 
             <form onSubmit={handleStartMaintenance} className="p-6 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Select Vehicle *</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Select Vehicle *</label>
                 <select
                   value={vehicleId}
                   onChange={(e) => setVehicleId(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 >
                   <option value="">Choose vehicle to repair...</option>
@@ -251,39 +251,39 @@ const Maintenance = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Issue Description *</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Issue Description *</label>
                 <textarea
                   value={issue}
                   onChange={(e) => setIssue(e.target.value)}
                   placeholder="Describe the mechanical issues or servicing tasks..."
                   rows="3"
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 placeholder-slate-600 outline-none focus:border-indigo-500 resize-none"
+                  className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-405 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Start Date *</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Start Date *</label>
                 <input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2.5 rounded-lg border border-slate-800 hover:bg-slate-850 hover:text-slate-200 text-sm font-semibold text-slate-400 transition-colors"
+                  className="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-50 hover:text-slate-700 text-sm font-semibold text-slate-500 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-lg shadow-indigo-600/10 transition-colors"
+                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-md transition-colors cursor-pointer"
                 >
                   Open Ticket
                 </button>
@@ -296,12 +296,12 @@ const Maintenance = () => {
       {/* CLOSE TICKET MODAL */}
       {showCloseModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-[#0c101e] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-slate-200">Complete Repair & Invoice</h3>
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-800">Complete Repair & Invoice</h3>
               <button
                 onClick={() => setShowCloseModal(false)}
-                className="text-slate-400 hover:text-slate-200 transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -309,7 +309,7 @@ const Maintenance = () => {
 
             <form onSubmit={handleCloseMaintenance} className="p-6 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Repair Cost ($) *</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Repair Cost ($) *</label>
                 <input
                   type="number"
                   value={cost}
@@ -317,33 +317,33 @@ const Maintenance = () => {
                   placeholder="E.g., 250"
                   min="0.01"
                   step="0.01"
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-355 bg-white py-2.5 px-3.5 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Completion Date *</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Completion Date *</label>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-355 bg-white py-2.5 px-3.5 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   required
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowCloseModal(false)}
-                  className="px-4 py-2.5 rounded-lg border border-slate-800 hover:bg-slate-850 hover:text-slate-200 text-sm font-semibold text-slate-400 transition-colors"
+                  className="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-50 hover:text-slate-700 text-sm font-semibold text-slate-500 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-sm font-semibold text-white shadow-lg shadow-emerald-600/10 transition-colors"
+                  className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-sm font-semibold text-white shadow-md transition-colors cursor-pointer"
                 >
                   Complete Service
                 </button>

@@ -118,13 +118,13 @@ const Vehicles = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Vehicle Registry</h2>
-          <p className="text-slate-400 mt-1">Manage and track fleet assets, statuses, and specifications.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Vehicle Registry</h2>
+          <p className="text-slate-500 mt-1">Manage and track fleet assets, statuses, and specifications.</p>
         </div>
         {isManager && (
           <button
             onClick={openAddModal}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md shadow-indigo-600/10"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-white shadow-md cursor-pointer"
           >
             <Plus size={16} />
             Register Vehicle
@@ -133,14 +133,14 @@ const Vehicles = () => {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-950/20 border border-rose-800/30 text-rose-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm">
           <AlertTriangle size={18} />
           <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/30 text-emerald-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm">
           <Check size={18} />
           <span>{success}</span>
         </div>
@@ -156,9 +156,9 @@ const Vehicles = () => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
+            <table className="w-full text-left text-sm text-slate-650">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                <tr className="border-b border-slate-200 text-slate-500 font-semibold">
                   <th className="pb-3">Registration</th>
                   <th className="pb-3">Model</th>
                   <th className="pb-3">Type</th>
@@ -169,25 +169,25 @@ const Vehicles = () => {
                   {isManager && <th className="pb-3 text-right">Actions</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {vehicles.map((v) => (
-                  <tr key={v.id} className="hover:bg-slate-800/10 transition-colors">
-                    <td className="py-4 font-semibold text-slate-100">{v.registration_number}</td>
-                    <td className="py-4">{v.model}</td>
-                    <td className="py-4">{v.type}</td>
-                    <td className="py-4">{v.max_load_capacity.toLocaleString()} kg</td>
-                    <td className="py-4">{v.odometer.toLocaleString()} km</td>
-                    <td className="py-4">${v.acquisition_cost.toLocaleString()}</td>
+                  <tr key={v.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-4 font-semibold text-slate-900">{v.registration_number}</td>
+                    <td className="py-4 text-slate-700">{v.model}</td>
+                    <td className="py-4 text-slate-700">{v.type}</td>
+                    <td className="py-4 text-slate-700">{v.max_load_capacity.toLocaleString()} kg</td>
+                    <td className="py-4 text-slate-700">{v.odometer.toLocaleString()} km</td>
+                    <td className="py-4 text-slate-700">${v.acquisition_cost.toLocaleString()}</td>
                     <td className="py-4 text-center">
                       <span
                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${
                           v.status === 'Available'
-                            ? 'bg-emerald-950/20 text-emerald-400 border-emerald-800/30'
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-250'
                             : v.status === 'On Trip'
-                            ? 'bg-indigo-950/20 text-indigo-400 border-indigo-800/30'
+                            ? 'bg-blue-50 text-blue-700 border-blue-250'
                             : v.status === 'In Shop'
-                            ? 'bg-amber-950/20 text-amber-400 border-amber-800/30'
-                            : 'bg-rose-950/20 text-rose-400 border-rose-800/30'
+                            ? 'bg-amber-50 text-amber-700 border-amber-250'
+                            : 'bg-rose-50 text-rose-700 border-rose-250'
                         }`}
                       >
                         {v.status}
@@ -198,14 +198,14 @@ const Vehicles = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => openEditModal(v)}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-400 hover:bg-slate-800/40 transition-all"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-slate-100 transition-all cursor-pointer"
                             title="Edit Vehicle"
                           >
                             <Edit2 size={16} />
                           </button>
                           <button
                             onClick={() => handleDelete(v.id)}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800/40 transition-all"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-slate-100 transition-all cursor-pointer"
                             title="Delete Vehicle"
                           >
                             <Trash2 size={16} />
@@ -224,15 +224,15 @@ const Vehicles = () => {
       {/* CRUD Form Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-[#0c101e] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-slate-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+              <h3 className="text-lg font-bold text-slate-800">
                 {editingId ? 'Edit Vehicle Details' : 'Register New Vehicle'}
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-slate-400 hover:text-slate-200 transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -242,7 +242,7 @@ const Vehicles = () => {
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Registration No *
                   </label>
                   <input
@@ -250,12 +250,12 @@ const Vehicles = () => {
                     value={regNum}
                     onChange={(e) => setRegNum(e.target.value)}
                     placeholder="E.g., REG-V05"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Model/Name *
                   </label>
                   <input
@@ -263,7 +263,7 @@ const Vehicles = () => {
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
                     placeholder="E.g., Van-05 / Ford Transit"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
@@ -271,13 +271,13 @@ const Vehicles = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Vehicle Type
                   </label>
                   <select
                     value={type}
                     onChange={(e) => setType(e.target.value)}
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   >
                     <option value="Truck">Truck</option>
                     <option value="Van">Van</option>
@@ -286,7 +286,7 @@ const Vehicles = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Max Capacity (kg) *
                   </label>
                   <input
@@ -295,7 +295,7 @@ const Vehicles = () => {
                     onChange={(e) => setMaxLoad(e.target.value)}
                     placeholder="E.g., 500"
                     min="1"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
@@ -303,7 +303,7 @@ const Vehicles = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Odometer (km)
                   </label>
                   <input
@@ -311,11 +311,11 @@ const Vehicles = () => {
                     value={odometer}
                     onChange={(e) => setOdometer(e.target.value)}
                     min="0"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Acquisition Cost ($) *
                   </label>
                   <input
@@ -324,7 +324,7 @@ const Vehicles = () => {
                     onChange={(e) => setAcqCost(e.target.value)}
                     placeholder="E.g., 25000"
                     min="0"
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-100 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                     required
                   />
                 </div>
@@ -332,13 +332,13 @@ const Vehicles = () => {
 
               {editingId && (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                  <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                     Operational Status
                   </label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2.5 px-3.5 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                    className="block w-full rounded-lg border border-slate-350 bg-white py-2.5 px-3.5 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                   >
                     <option value="Available">Available</option>
                     <option value="On Trip">On Trip</option>
@@ -349,17 +349,17 @@ const Vehicles = () => {
               )}
 
               {/* Submit buttons */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2.5 rounded-lg border border-slate-800 hover:bg-slate-850 hover:text-slate-200 text-sm font-semibold text-slate-400 transition-colors"
+                  className="px-4 py-2.5 rounded-lg border border-slate-300 hover:bg-slate-50 hover:text-slate-700 text-sm font-semibold text-slate-500 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-lg shadow-indigo-600/10 transition-colors"
+                  className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold text-white shadow-md transition-colors cursor-pointer"
                 >
                   {editingId ? 'Save Changes' : 'Register Vehicle'}
                 </button>

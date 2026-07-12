@@ -83,12 +83,12 @@ const Dashboard = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">Dashboard</h2>
-          <p className="text-slate-400 mt-1">Real-time tracking, metrics, and fleet utilization status.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h2>
+          <p className="text-slate-500 mt-1">Real-time tracking, metrics, and fleet utilization status.</p>
         </div>
         <button
           onClick={fetchData}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 transition-colors shadow-sm cursor-pointer"
         >
           <RotateCcw size={16} />
           Refresh Stats
@@ -96,7 +96,7 @@ const Dashboard = () => {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-950/20 border border-rose-800/30 text-rose-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm">
           <AlertTriangle size={18} />
           <span>{error}</span>
         </div>
@@ -107,17 +107,17 @@ const Dashboard = () => {
         {/* Fleet Utilization */}
         <div className="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold text-slate-400">Fleet Utilization</span>
-            <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
+            <span className="text-sm font-semibold text-slate-500">Fleet Utilization</span>
+            <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600">
               <TrendingUp size={20} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{kpis.fleet_utilization}%</span>
+            <span className="text-3xl font-extrabold text-slate-900">{kpis.fleet_utilization}%</span>
           </div>
-          <div className="mt-4 w-full bg-slate-800 rounded-full h-2">
+          <div className="mt-4 w-full bg-slate-100 rounded-full h-2">
             <div
-              className="bg-indigo-500 h-2 rounded-full transition-all duration-1000"
+              className="bg-indigo-650 h-2 rounded-full transition-all duration-1000"
               style={{ width: `${Math.min(kpis.fleet_utilization, 100)}%` }}
             />
           </div>
@@ -126,13 +126,13 @@ const Dashboard = () => {
         {/* Active Vehicles */}
         <div className="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold text-slate-400">Active Vehicles</span>
-            <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400">
+            <span className="text-sm font-semibold text-slate-500">Active Vehicles</span>
+            <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
               <Truck size={20} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{kpis.active_vehicles}</span>
+            <span className="text-3xl font-extrabold text-slate-900">{kpis.active_vehicles}</span>
             <span className="text-xs text-slate-500">on trip</span>
           </div>
           <p className="text-xs text-slate-500 mt-2">Available: {kpis.available_vehicles}</p>
@@ -141,13 +141,13 @@ const Dashboard = () => {
         {/* Drivers On Duty */}
         <div className="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold text-slate-400">Drivers On Duty</span>
-            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+            <span className="text-sm font-semibold text-slate-500">Drivers On Duty</span>
+            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600">
               <Users size={20} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{kpis.drivers_on_duty}</span>
+            <span className="text-3xl font-extrabold text-slate-900">{kpis.drivers_on_duty}</span>
             <span className="text-xs text-slate-500">active</span>
           </div>
           <p className="text-xs text-slate-500 mt-2">Total active trips: {kpis.active_trips}</p>
@@ -156,13 +156,13 @@ const Dashboard = () => {
         {/* Vehicles in Shop */}
         <div className="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold text-slate-400">In Shop (Maintenance)</span>
-            <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400">
+            <span className="text-sm font-semibold text-slate-500">In Shop (Maintenance)</span>
+            <div className="p-2 rounded-lg bg-amber-50 text-amber-600">
               <Wrench size={20} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{kpis.in_shop_vehicles}</span>
+            <span className="text-3xl font-extrabold text-slate-900">{kpis.in_shop_vehicles}</span>
             <span className="text-xs text-slate-500">repairing</span>
           </div>
           <p className="text-xs text-slate-500 mt-2">Pending dispatches: {kpis.pending_trips}</p>
@@ -175,16 +175,16 @@ const Dashboard = () => {
         {/* Filters and List */}
         <div className="lg:col-span-2 space-y-6">
           <div className="glass-card rounded-2xl p-6">
-            <h3 className="text-lg font-bold text-slate-200 mb-4">Registry Asset Filter</h3>
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Registry Asset Filter</h3>
             
             {/* Filter controls */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Vehicle Type</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Vehicle Type</label>
                 <select
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2 px-3 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-300 bg-white py-2 px-3 text-sm text-slate-800 outline-none focus:border-indigo-500"
                 >
                   <option value="">All Types</option>
                   <option value="Truck">Truck</option>
@@ -195,11 +195,11 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Status</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Status</label>
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2 px-3 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-300 bg-white py-2 px-3 text-sm text-slate-800 outline-none focus:border-indigo-500"
                 >
                   <option value="">All Statuses</option>
                   <option value="Available">Available</option>
@@ -210,11 +210,11 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Region (Mock)</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Region (Mock)</label>
                 <select
                   value={regionFilter}
                   onChange={(e) => setRegionFilter(e.target.value)}
-                  className="block w-full rounded-lg border border-slate-800 bg-[#070a13] py-2 px-3 text-sm text-slate-200 outline-none focus:border-indigo-500"
+                  className="block w-full rounded-lg border border-slate-300 bg-white py-2 px-3 text-sm text-slate-800 outline-none focus:border-indigo-500"
                 >
                   <option value="">All Regions</option>
                   <option value="North">North Hub</option>
@@ -225,14 +225,14 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between border-t border-slate-800 pt-4">
-              <span className="text-xs font-semibold text-slate-400">
+            <div className="flex items-center justify-between border-t border-slate-200 pt-4">
+              <span className="text-xs font-semibold text-slate-500">
                 Showing {filteredVehicles.length} of {vehicles.length} assets
               </span>
               {(typeFilter || statusFilter || regionFilter) && (
                 <button
                   onClick={handleResetFilters}
-                  className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
+                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 transition-colors cursor-pointer"
                 >
                   Clear Filters
                 </button>
@@ -242,11 +242,11 @@ const Dashboard = () => {
 
           {/* Quick List Card */}
           <div className="glass-card rounded-2xl p-6">
-            <h3 className="text-lg font-bold text-slate-200 mb-4">Quick Status Check</h3>
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Quick Status Check</h3>
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-300">
+              <table className="w-full text-left text-sm text-slate-650">
                 <thead>
-                  <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                  <tr className="border-b border-slate-200 text-slate-500 font-semibold">
                     <th className="pb-3">Reg Number</th>
                     <th className="pb-3">Model</th>
                     <th className="pb-3">Type</th>
@@ -255,31 +255,31 @@ const Dashboard = () => {
                     <th className="pb-3 text-right">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
+                <tbody className="divide-y divide-slate-100">
                   {filteredVehicles.length === 0 ? (
                     <tr>
-                      <td colSpan="6" className="py-8 text-center text-slate-500">
+                      <td colSpan="6" className="py-8 text-center text-slate-400">
                         No vehicles matching the filters found.
                       </td>
                     </tr>
                   ) : (
                     filteredVehicles.slice(0, 5).map((v) => (
-                      <tr key={v.id} className="hover:bg-slate-800/10 transition-colors">
-                        <td className="py-3 font-semibold text-slate-100">{v.registration_number}</td>
-                        <td className="py-3">{v.model}</td>
-                        <td className="py-3">{v.type}</td>
-                        <td className="py-3">{v.max_load_capacity} kg</td>
-                        <td className="py-3">{v.odometer.toLocaleString()} km</td>
+                      <tr key={v.id} className="hover:bg-slate-50 transition-colors">
+                        <td className="py-3 font-semibold text-slate-900">{v.registration_number}</td>
+                        <td className="py-3 text-slate-700">{v.model}</td>
+                        <td className="py-3 text-slate-700">{v.type}</td>
+                        <td className="py-3 text-slate-700">{v.max_load_capacity} kg</td>
+                        <td className="py-3 text-slate-700">{v.odometer.toLocaleString()} km</td>
                         <td className="py-3 text-right">
                           <span
                             className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium border ${
                               v.status === 'Available'
-                                ? 'bg-emerald-950/20 text-emerald-400 border-emerald-800/30'
+                                ? 'bg-emerald-50 text-emerald-700 border-emerald-250'
                                 : v.status === 'On Trip'
-                                ? 'bg-indigo-950/20 text-indigo-400 border-indigo-800/30'
+                                ? 'bg-blue-50 text-blue-700 border-blue-250'
                                 : v.status === 'In Shop'
-                                ? 'bg-amber-950/20 text-amber-400 border-amber-800/30'
-                                : 'bg-rose-950/20 text-rose-400 border-rose-800/30'
+                                ? 'bg-amber-50 text-amber-700 border-amber-250'
+                                : 'bg-rose-50 text-rose-700 border-rose-250'
                             }`}
                           >
                             {v.status}
@@ -297,8 +297,8 @@ const Dashboard = () => {
         {/* Status Distribution Chart */}
         <div className="glass-card rounded-2xl p-6 flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-bold text-slate-200 mb-2">Fleet Composition</h3>
-            <p className="text-xs text-slate-400 mb-4">Visual breakdown of vehicle operational statuses.</p>
+            <h3 className="text-lg font-bold text-slate-800 mb-2">Fleet Composition</h3>
+            <p className="text-xs text-slate-500 mb-4">Visual breakdown of vehicle operational statuses.</p>
           </div>
           
           <div className="h-64 relative flex items-center justify-center">
@@ -320,28 +320,28 @@ const Dashboard = () => {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#0c101e',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #e2e8f0',
                       borderRadius: '8px',
-                      color: '#f8fafc'
+                      color: '#0f172a'
                     }}
                   />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div className="text-slate-500 text-sm">No data available</div>
+              <div className="text-slate-400 text-sm">No data available</div>
             )}
           </div>
 
           {/* Custom Legends */}
-          <div className="space-y-2 mt-4 pt-4 border-t border-slate-800/60">
+          <div className="space-y-2 mt-4 pt-4 border-t border-slate-200">
             {chartData.map((item) => (
               <div key={item.name} className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-                  <span className="text-slate-300">{item.name}</span>
+                  <span className="text-slate-600">{item.name}</span>
                 </div>
-                <span className="font-bold text-slate-100">{item.value}</span>
+                <span className="font-bold text-slate-900">{item.value}</span>
               </div>
             ))}
           </div>

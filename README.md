@@ -41,64 +41,30 @@ Built with a robust **Flask (Python) backend** and a high-performance **React + 
 
 ## 📁 Directory Structure
 
-TransitOps/
-├── backend/
-│   ├── app/
-│   │   ├── __init__.py          # Flask app factory, extension init, blueprint registration
-│   │   ├── config.py            # Development, testing, and production config classes
-│   │   ├── models/              # SQLAlchemy Database Models
-│   │   │   ├── __init__.py
-│   │   │   ├── user.py          # RBAC Users
-│   │   │   ├── vehicle.py       # Fleet assets
-│   │   │   ├── driver.py        # Operator logs
-│   │   │   ├── trip.py          # Shipping journeys
-│   │   │   ├── maintenance.py   # Service tickets
-│   │   │   └── expense.py       # Fuel logs and ledger outlays
-│   │   ├── routes/              # Flask Blueprints (API Blueprints)
-│   │   │   ├── __init__.py
-│   │   │   ├── auth.py
-│   │   │   ├── vehicles.py
-│   │   │   ├── drivers.py
-│   │   │   ├── trips.py
-│   │   │   ├── maintenance.py
-│   │   │   ├── expenses.py
-│   │   │   └── analytics.py
-│   │   ├── services/            # Calculations and ROI metrics layer
-│   │   └── utils/
-│   │       ├── auth_helpers.py  # RBAC check decorators
-│   │       └── validators.py    # Custom validators
-│   ├── tests/
-│   │   └── test_api.py          # Backend unit test suite
-│   ├── run.py                   # Main entry point to launch Flask server
-│   ├── requirements.txt
-│   └── README.md
-│
-├── frontend/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   │   ├── common/          # Layout, badges, buttons, inputs, tables, modals
-│   │   │   └── ...              # Domain-specific components (vehicles, drivers, etc.)
-│   │   ├── context/
-│   │   │   ├── AuthContext.jsx  # Handles logins, logouts, and user session storage
-│   │   │   └── ThemeContext.jsx # Light/Dark mode state management
-│   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Vehicles.jsx
-│   │   │   ├── Drivers.jsx
-│   │   │   ├── Trips.jsx
-│   │   │   ├── Maintenance.jsx
-│   │   │   ├── Expenses.jsx
-│   │   │   └── Analytics.jsx
-│   │   ├── services/
-│   │   │   └── api.js           # Custom Axios instances and interceptors
-│   │   ├── App.jsx              # Client routing and ProtectedRoute wrappers
-│   │   ├── main.jsx
-│   │   └── index.css            # Base styles and utility classes
-│   ├── package.json
-│   ├── vite.config.js
-│   └── README.md
+* 📂 **backend/** — *Flask API source code*
+  * 📂 **app/** — *Application package*
+    * 📄 `__init__.py` — *Flask app factory & extensions*
+    * 📄 `config.py` — *Configuration setups (Dev/Test/Prod)*
+    * 📂 **models/** — *SQLAlchemy DB schemas*
+      * 📄 `user.py` / `vehicle.py` / `driver.py` / `trip.py` / `maintenance.py` / `expense.py`
+    * 📂 **routes/** — *API Blueprints & controller endpoints*
+      * 📄 `auth.py` / `vehicles.py` / `drivers.py` / `trips.py` / `maintenance.py` / `expenses.py` / `analytics.py`
+    * 📂 **services/** — *Business logic & ROI calculation handlers*
+    * 📂 **utils/** — *RBAC guards and validators*
+  * 📂 **tests/** — *Automated unit test suite*
+    * 📄 `test_api.py`
+  * 📄 `run.py` — *Main entrypoint script*
+  * 📄 `requirements.txt` — *Python dependencies list*
+* 📂 **frontend/** — *Vite + React single-page app*
+  * 📂 **src/** — *React components & page assets*
+    * 📂 **components/** — *Reusable UI widgets (KPIs, tables, forms)*
+    * 📂 **context/** — *AuthContext & ThemeContext*
+    * 📂 **pages/** — *Main dashboard, asset registers, and ledger pages*
+    * 📂 **services/** — *Axios API wrappers & interceptors*
+    * 📄 `App.jsx` / `main.jsx` — *Root layout, routing configuration, application entry*
+    * 📄 `index.css` — *Tailwind CSS styling configs*
+  * 📄 `package.json` — *NPM dependencies and run scripts*
+  * 📄 `vite.config.js` — *Vite compilation configurations*
 
 
 

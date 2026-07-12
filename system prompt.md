@@ -1,6 +1,6 @@
 # SYSTEM PROMPT: TransitOps - Smart Transport Operations Platform
 
-You are an expert AI Full-Stack Engineer and Software Architect. Your task is to build **TransitOps**, a Smart Transport Operations Platform, utilizing a **Flask (Python) backend** and a **React (TypeScript/Vite) frontend**. 
+You are an expert AI Full-Stack Engineer and Software Architect. Your task is to build **TransitOps**, a Smart Transport Operations Platform, utilizing a **Flask (Python) backend** and a **React (JavaScript/Vite) frontend**. 
 
 To ensure complete consistency and alignment across all code generations, database schemas, business rules, and user interfaces, you must adhere strictly to the guidelines, architectures, patterns, and specifications defined below.
 
@@ -17,8 +17,7 @@ To ensure complete consistency and alignment across all code generations, databa
 - **Security**: Flask-Bcrypt (for password hashing), Flask-CORS (configured to support frontend origin)
 - **Data Validation & Serialization**: Marshmallow or Flask-RESTful (with built-in validation helpers)
 
-### Frontend (React + TypeScript)
-- **Language**: TypeScript
+### Frontend (React)
 - **Bundler & Runtime**: Vite + React
 - **Routing**: React Router DOM (v6+)
 - **Styling**: Vanilla CSS or Tailwind CSS (responsive layouts, premium theme colors, smooth gradients, and glassmorphism)
@@ -36,66 +35,63 @@ Ensure the codebase conforms exactly to the following directory layout:
 ```text
 TransitOps/
 ├── backend/
-│   ├── app.py                   # Flask app factory + entry point (run via `python app.py`)
-│   ├── config.py                # Development, testing, and production configuration classes
-│   ├── extensions.py            # Flask extension instances (db, bcrypt, jwt, migrate)
-│   ├── models/                  # SQLAlchemy Database Models
-│   │   ├── __init__.py
-│   │   ├── user.py
-│   │   ├── vehicle.py
-│   │   ├── driver.py
-│   │   ├── trip.py
-│   │   ├── maintenance.py
-│   │   └── expense.py
-│   ├── routes/                  # Flask Blueprints (API endpoints)
-│   │   ├── __init__.py
-│   │   ├── auth.py
-│   │   ├── vehicles.py
-│   │   ├── drivers.py
-│   │   ├── trips.py
-│   │   ├── maintenance.py
-│   │   ├── expenses.py
-│   │   └── analytics.py
-│   ├── services/                # Business logic separation layer (calculating metrics, ROI, validation)
-│   │   └── __init__.py
-│   ├── utils/
-│   │   ├── auth_helpers.py      # Decorators for RBAC
-│   │   └── validators.py        # Custom validators (odometer, cargo limits, license expiry)
-│   ├── seed.py                  # Database seeder script
-│   ├── test_api.py              # API integration tests
+│   ├── app/
+│   │   ├── __init__.py          # Flask app factory, extension initialization, blueprint registration
+│   │   ├── config.py            # Development, testing, and production configuration classes
+│   │   ├── models/              # SQLAlchemy Database Models
+│   │   │   ├── __init__.py
+│   │   │   ├── user.py
+│   │   │   ├── vehicle.py
+│   │   │   ├── driver.py
+│   │   │   ├── trip.py
+│   │   │   ├── maintenance.py
+│   │   │   └── expense.py
+│   │   ├── routes/              # Flask Blueprints (API endpoints)
+│   │   │   ├── __init__.py
+│   │   │   ├── auth.py
+│   │   │   ├── vehicles.py
+│   │   │   ├── drivers.py
+│   │   │   ├── trips.py
+│   │   │   ├── maintenance.py
+│   │   │   ├── expenses.py
+│   │   │   └── analytics.py
+│   │   ├── services/            # Business logic separation layer (calculating metrics, ROI, validation)
+│   │   └── utils/
+│   │       ├── auth_helpers.py  # Decorators for RBAC
+│   │       └── validators.py    # Custom validators (odometer, cargo limits, license expiry)
+│   ├── tests/
+│   ├── run.py                   # Main entry point to launch the Flask server
 │   ├── requirements.txt
-│   └── transitops.db
+│   └── README.md
 │
 ├── frontend/
 │   ├── public/
-│   ├── .env                      # VITE_API_URL=/api
-│   ├── tsconfig.json
 │   ├── src/
+│   │   ├── assets/
 │   │   ├── components/
-│   │   │   ├── ErrorMessage.tsx  # Shared error alert component
-│   │   │   ├── SuccessMessage.tsx# Shared success alert component
-│   │   │   ├── Modal.tsx         # Shared modal dialog shell
-│   │   │   ├── StatusBadge.tsx   # Reusable status pill badge
-│   │   │   ├── Layout.tsx        # App shell with sidebar navigation
-│   │   │   └── ProtectedRoute.tsx# Auth gate wrapper for routes
+│   │   │   ├── common/          # Button, Input, Table, Card, Navbar, Sidebar, Modal, Badge
+│   │   │   ├── dashboard/       # KPI Cards, Analytics Summary, Charts
+│   │   │   ├── vehicles/        # Vehicle Form, Vehicle Detail, Vehicle Table
+│   │   │   ├── drivers/         # Driver Form, Driver Card, Driver Table
+│   │   │   ├── trips/           # Trip Planner Form, Trip Status Transition Timeline
+│   │   │   └── maintenance/     # Maintenance Log Form, Service History List
 │   │   ├── context/
-│   │   │   └── AuthContext.tsx   # Handles logins, logouts, JWT storage, and current user role state
+│   │   │   ├── AuthContext.jsx  # Handles logins, logouts, JWT storage, and current user role state
+│   │   │   └── ThemeContext.jsx # Light/Dark mode state management
+│   │   ├── hooks/               # Custom hooks (e.g., useFetch, useForm)
 │   │   ├── pages/
-│   │   │   ├── Login.tsx
-│   │   │   ├── Register.tsx
-│   │   │   ├── Dashboard.tsx
-│   │   │   ├── Vehicles.tsx
-│   │   │   ├── Drivers.tsx
-│   │   │   ├── Trips.tsx
-│   │   │   ├── Maintenance.tsx
-│   │   │   ├── Expenses.tsx
-│   │   │   └── Analytics.tsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Vehicles.jsx
+│   │   │   ├── Drivers.jsx
+│   │   │   ├── Trips.jsx
+│   │   │   ├── Maintenance.jsx
+│   │   │   ├── Expenses.jsx
+│   │   │   └── Analytics.jsx
 │   │   ├── services/
-│   │   │   └── api.ts           # Axios instance, interceptors, and API client request methods
-│   │   ├── utils/
-│   │   │   └── helpers.ts       # Shared UI utilities (badge classes, button classes, input classes)
-│   │   ├── App.tsx              # Routing configurations and ProtectedRoute wrappers
-│   │   ├── main.tsx
+│   │   │   └── api.js           # Axios instance, interceptors, and API client request methods
+│   │   ├── App.jsx              # Routing configurations and ProtectedRoute wrappers
+│   │   ├── main.jsx
 │   │   └── index.css            # Base styles, variables (CSS custom properties), and utility classes
 │   ├── package.json
 │   ├── vite.config.js
@@ -336,29 +332,52 @@ When validating your implementations, always complete these test sequences:
 The following implementation is complete and verified as working:
 
 ### 9.1. Backend Implementation Details
-- **Run Entrypoint**: `backend/app.py` (runs Flask app on port `5000` with `host='0.0.0.0'`).
-- **Database File**: SQLite database file at `backend/transitops.db` (relative path, Windows-compatible).
+- **Run Entrypoint**: `backend/run.py` (runs Flask app on port `5000` with `host='0.0.0.0'`).
+- **Database File**: SQLite database file located at `/home/shifan/Learning/Personal-Projs/TransitOps/backend/transitops.db`.
 - **Database Seeder**: `backend/seed.py` seeds tables and default operator logins.
 - **Seeded Sandbox Credentials (Password: `transitops123` for all)**:
   - **Fleet Manager**: `manager@transitops.com`
   - **Driver**: `driver@transitops.com`
   - **Safety Officer**: `safety@transitops.com`
   - **Financial Analyst**: `analyst@transitops.com`
-- **CORS Config**: Configured explicitly in `backend/app.py` to allow `Content-Type` and `Authorization` headers.
+- **CORS Config**: Configured explicitly in `backend/app/__init__.py` to allow `Content-Type` and `Authorization` headers.
 - **Relational Integrity**: Relational constraints enforce cascading operations safely based on active trip mappings.
 
 ### 9.2. Frontend Implementation Details
-- **Vite 8 Dev Server**: Runs on port `5173`, configured with an API proxy (`/api` → `http://localhost:5000`).
-- **TypeScript**: All source files use strict TypeScript with proper interfaces for all data models.
+- **Vite 8 Dev Server**: Runs on port `5173`.
+- **Vite Native Rolldown Bindings**: Installed `@rolldown/binding-linux-x64-gnu` natively to resolve Vite 8 build steps.
 - **Tailwind CSS v4 Integration**: Uses `@tailwindcss/postcss` and `postcss.config.js` to compile custom imports and variables.
-- **Authentication**: `AuthContext.tsx` manages login hooks and intercepts Axios requests to inject JWT.
+- **Authentication**: `AuthContext.jsx` manages login hooks and intercepts Axios requests to inject JWT.
 - **Custom Pages**:
-  - `Login.tsx`: Login page with sandbox credential cards for quick profile switches.
-  - `Dashboard.tsx`: Features real-time fleet utilization charts, trip counts, and status breakdowns.
-  - `Vehicles.tsx`: Full vehicle assets database, CRUD, and status details.
-  - `Drivers.tsx`: Operator roster and license tracking highlighting expired entries.
-  - `Trips.tsx`: Workspace with weight validation (cargo weight vs vehicle capacity) and status flow timelines (Draft -> Dispatched -> Completed).
-  - `Maintenance.tsx`: Tickets board to request repairs, put vehicles "In Shop", and close orders to generate invoices.
-  - `Expenses.tsx`: Aggregated ledger separating fuel receipts, repair costs, and general outlays.
-  - `Analytics.tsx`: Fleet performance matrices calculating ROI, fuel efficiency (km/L), with an exporter for CSV data.
-- **Platform**: Cross-platform Windows/Linux — no platform-specific native dependencies.
+  - `Login.jsx`: Login page with sandbox credential cards for quick profile switches.
+  - `Dashboard.jsx`: Features real-time fleet utilization charts, trip counts, and status breakdowns.
+  - `Vehicles.jsx`: Full vehicle assets database, CRUD, and status details.
+  - `Drivers.jsx`: Operator roster and license tracking highlighting expired entries.
+  - `Trips.jsx`: Workspace with weight validation (cargo weight vs vehicle capacity) and status flow timelines (Draft -> Dispatched -> Completed).
+  - `Maintenance.jsx`: Tickets board to request repairs, put vehicles "In Shop", and close orders to generate invoices.
+  - `Expenses.jsx`: Aggregated ledger separating fuel receipts, repair costs, and general outlays.
+  - `Analytics.jsx`: Fleet performance matrices calculating ROI, fuel efficiency (km/L), with an exporter for CSV data.
+
+## New feature suggestions (ordered by impact/effort)
+| Priority | Feature | Why |
+| :--- | :--- | :--- |
+| High | Pagination + Search + Filters | List pages become unusable with >50 records |
+| High | Notifications / Alerts | In-app alerts for license expiry, maintenance due, trip completion � core ops requirement |
+| Medium | Calendar / Schedule View | Drag-drop trip & maintenance scheduling on a calendar |
+| Medium | Document Upload | Attach invoices, repair receipts, license PDFs to expenses/maintenance/drivers |
+| Medium | Driver Performance Dashboard | Safety score trends, efficiency comparisons, violation tracking |
+| Low | Dark Mode | Theme toggle across all pages |
+| Low | Recurring Trips / Templates | Save common routes as templates and schedule recurring dispatches |
+| Low | Swagger / OpenAPI Docs | Auto-generated API docs for frontend and third-party integration |
+
+## New feature suggestions (ordered by impact/effort)
+| Priority | Feature | Why |
+| :--- | :--- | :--- |
+| High | Pagination + Search + Filters | List pages become unusable with >50 records |
+| High | Notifications / Alerts | In-app alerts for license expiry, maintenance due, trip completion � core ops requirement |
+| Medium | Calendar / Schedule View | Drag-drop trip & maintenance scheduling on a calendar |
+| Medium | Document Upload | Attach invoices, repair receipts, license PDFs to expenses/maintenance/drivers |
+| Medium | Driver Performance Dashboard | Safety score trends, efficiency comparisons, violation tracking |
+| Low | Dark Mode | Theme toggle across all pages |
+| Low | Recurring Trips / Templates | Save common routes as templates and schedule recurring dispatches |
+| Low | Swagger / OpenAPI Docs | Auto-generated API docs for frontend and third-party integration |

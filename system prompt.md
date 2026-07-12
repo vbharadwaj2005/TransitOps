@@ -323,3 +323,34 @@ When validating your implementations, always complete these test sequences:
 
 ---
 *Follow this blueprint exactly. Do not abbreviate database constraints or skip state transitions.*
+
+## 9. Completed Implementation History & Current State
+
+The following implementation is complete and verified as working:
+
+### 9.1. Backend Implementation Details
+- **Run Entrypoint**: `backend/run.py` (runs Flask app on port `5000` with `host='0.0.0.0'`).
+- **Database File**: SQLite database file located at `/home/shifan/Learning/Personal-Projs/TransitOps/backend/transitops.db`.
+- **Database Seeder**: `backend/seed.py` seeds tables and default operator logins.
+- **Seeded Sandbox Credentials (Password: `transitops123` for all)**:
+  - **Fleet Manager**: `manager@transitops.com`
+  - **Driver**: `driver@transitops.com`
+  - **Safety Officer**: `safety@transitops.com`
+  - **Financial Analyst**: `analyst@transitops.com`
+- **CORS Config**: Configured explicitly in `backend/app/__init__.py` to allow `Content-Type` and `Authorization` headers.
+- **Relational Integrity**: Relational constraints enforce cascading operations safely based on active trip mappings.
+
+### 9.2. Frontend Implementation Details
+- **Vite 8 Dev Server**: Runs on port `5173`.
+- **Vite Native Rolldown Bindings**: Installed `@rolldown/binding-linux-x64-gnu` natively to resolve Vite 8 build steps.
+- **Tailwind CSS v4 Integration**: Uses `@tailwindcss/postcss` and `postcss.config.js` to compile custom imports and variables.
+- **Authentication**: `AuthContext.jsx` manages login hooks and intercepts Axios requests to inject JWT.
+- **Custom Pages**:
+  - `Login.jsx`: Login page with sandbox credential cards for quick profile switches.
+  - `Dashboard.jsx`: Features real-time fleet utilization charts, trip counts, and status breakdowns.
+  - `Vehicles.jsx`: Full vehicle assets database, CRUD, and status details.
+  - `Drivers.jsx`: Operator roster and license tracking highlighting expired entries.
+  - `Trips.jsx`: Workspace with weight validation (cargo weight vs vehicle capacity) and status flow timelines (Draft -> Dispatched -> Completed).
+  - `Maintenance.jsx`: Tickets board to request repairs, put vehicles "In Shop", and close orders to generate invoices.
+  - `Expenses.jsx`: Aggregated ledger separating fuel receipts, repair costs, and general outlays.
+  - `Analytics.jsx`: Fleet performance matrices calculating ROI, fuel efficiency (km/L), with an exporter for CSV data.

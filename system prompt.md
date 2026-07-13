@@ -30,72 +30,87 @@ To ensure complete consistency and alignment across all code generations, databa
 
 ## 2. Directory Structure
 
-Ensure the codebase conforms exactly to the following directory layout:
-
 ```text
 TransitOps/
-â”œâ”€â”€ backend/
-â”‚   â”œâ”€â”€ app/
-â”‚   â”‚   â”œâ”€â”€ __init__.py          # Flask app factory, extension initialization, blueprint registration
-â”‚   â”‚   â”œâ”€â”€ config.py            # Development, testing, and production configuration classes
-â”‚   â”‚   â”œâ”€â”€ models/              # SQLAlchemy Database Models
-â”‚   â”‚   â”‚   â”œâ”€â”€ __init__.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ user.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ vehicle.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ driver.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ trip.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ maintenance.py
-â”‚   â”‚   â”‚   â””â”€â”€ expense.py
-â”‚   â”‚   â”œâ”€â”€ routes/              # Flask Blueprints (API endpoints)
-â”‚   â”‚   â”‚   â”œâ”€â”€ __init__.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ auth.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ vehicles.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ drivers.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ trips.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ maintenance.py
-â”‚   â”‚   â”‚   â”œâ”€â”€ expenses.py
-â”‚   â”‚   â”‚   â””â”€â”€ analytics.py
-â”‚   â”‚   â”œâ”€â”€ services/            # Business logic separation layer (calculating metrics, ROI, validation)
-â”‚   â”‚   â””â”€â”€ utils/
-â”‚   â”‚       â”œâ”€â”€ auth_helpers.py  # Decorators for RBAC
-â”‚   â”‚       â””â”€â”€ validators.py    # Custom validators (odometer, cargo limits, license expiry)
-â”‚   â”œâ”€â”€ tests/
-â”‚   â”œâ”€â”€ run.py                   # Main entry point to launch the Flask server
-â”‚   â”œâ”€â”€ requirements.txt
-â”‚   â””â”€â”€ README.md
-â”‚
-â”œâ”€â”€ frontend/
-â”‚   â”œâ”€â”€ public/
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â”œâ”€â”€ assets/
-â”‚   â”‚   â”œâ”€â”€ components/
-â”‚   â”‚   â”‚   â”œâ”€â”€ common/          # Button, Input, Table, Card, Navbar, Sidebar, Modal, Badge
-â”‚   â”‚   â”‚   â”œâ”€â”€ dashboard/       # KPI Cards, Analytics Summary, Charts
-â”‚   â”‚   â”‚   â”œâ”€â”€ vehicles/        # Vehicle Form, Vehicle Detail, Vehicle Table
-â”‚   â”‚   â”‚   â”œâ”€â”€ drivers/         # Driver Form, Driver Card, Driver Table
-â”‚   â”‚   â”‚   â”œâ”€â”€ trips/           # Trip Planner Form, Trip Status Transition Timeline
-â”‚   â”‚   â”‚   â””â”€â”€ maintenance/     # Maintenance Log Form, Service History List
-â”‚   â”‚   â”œâ”€â”€ context/
-â”‚   â”‚   â”‚   â”œâ”€â”€ AuthContext.jsx  # Handles logins, logouts, JWT storage, and current user role state
-â”‚   â”‚   â”‚   â””â”€â”€ ThemeContext.jsx # Light/Dark mode state management
-â”‚   â”‚   â”œâ”€â”€ hooks/               # Custom hooks (e.g., useFetch, useForm)
-â”‚   â”‚   â”œâ”€â”€ pages/
-â”‚   â”‚   â”‚   â”œâ”€â”€ Login.jsx
-â”‚   â”‚   â”‚   â”œâ”€â”€ Dashboard.jsx
-â”‚   â”‚   â”‚   â”œâ”€â”€ Vehicles.jsx
-â”‚   â”‚   â”‚   â”œâ”€â”€ Drivers.jsx
-â”‚   â”‚   â”‚   â”œâ”€â”€ Trips.jsx
-â”‚   â”‚   â”‚   â”œâ”€â”€ Maintenance.jsx
-â”‚   â”‚   â”‚   â”œâ”€â”€ Expenses.jsx
-â”‚   â”‚   â”‚   â””â”€â”€ Analytics.jsx
-â”‚   â”‚   â”œâ”€â”€ services/
-â”‚   â”‚   â”‚   â””â”€â”€ api.js           # Axios instance, interceptors, and API client request methods
-â”‚   â”‚   â”œâ”€â”€ App.jsx              # Routing configurations and ProtectedRoute wrappers
-â”‚   â”‚   â”œâ”€â”€ main.jsx
-â”‚   â”‚   â””â”€â”€ index.css            # Base styles, variables (CSS custom properties), and utility classes
-â”‚   â”œâ”€â”€ package.json
-â”‚   â”œâ”€â”€ vite.config.js
-â”‚   â””â”€â”€ README.md
+├── .git/
+├── .gitignore
+├── README.md
+├── system prompt.md
+├── backend/
+│   ├── __init__.py              # Flask app factory, extension init, blueprint registration, auto-seeding
+│   ├── app.py                   # Entry point to run Flask server
+│   ├── config.py                # Dev/test/prod config, secrets from env, CORS origins
+│   ├── extensions.py            # SQLAlchemy, JWT, Bcrypt, CORS, limiter instances
+│   ├── seed.py                  # Legacy seeder (auto-seeding now in __init__.py)
+│   ├── test_api.py              # Backend tests (5 tests, isolated TestConfig)
+│   ├── requirements.txt
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── vehicle.py
+│   │   ├── driver.py
+│   │   ├── trip.py
+│   │   ├── maintenance.py
+│   │   ├── expense.py
+│   │   ├── alert.py
+│   │   ├── booking.py
+│   │   └── trip_template.py
+│   ├── routes/
+│   │   ├── auth.py
+│   │   ├── vehicles.py
+│   │   ├── drivers.py
+│   │   ├── trips.py
+│   │   ├── maintenance.py
+│   │   ├── expenses.py
+│   │   ├── analytics.py
+│   │   ├── alerts.py
+│   │   ├── bookings.py
+│   │   └── trip_templates.py
+│   ├── utils/
+│   │   └── auth_helpers.py      # Decorators for RBAC
+│   └── instance/                # SQLite DB created at runtime
+├── frontend/
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── postcss.config.js
+│   ├── .oxlintrc.json
+│   ├── public/
+│   ├── dist/                    # Build output
+│   └── src/
+│       ├── main.tsx
+│       ├── App.tsx              # Routing + ProtectedRoute wrappers
+│       ├── App.css              # Emptied (all classes unused)
+│       ├── index.css            # Tailwind imports + animate-fade-in
+│       ├── assets/              # Empty after cleanup
+│       ├── components/
+│       │   ├── Layout.tsx
+│       │   ├── Modal.tsx
+│       │   ├── ProtectedRoute.tsx
+│       │   ├── StatusBadge.tsx
+│       │   ├── ErrorMessage.tsx
+│       │   └── SuccessMessage.tsx
+│       ├── context/
+│       │   ├── AuthContext.tsx   # JWT login/logout, token storage, user role state
+│       │   └── ThemeContext.tsx  # Light/Dark mode state management
+│       ├── pages/
+│       │   ├── Login.tsx
+│       │   ├── Register.tsx
+│       │   ├── Dashboard.tsx
+│       │   ├── Vehicles.tsx
+│       │   ├── Drivers.tsx
+│       │   ├── Trips.tsx
+│       │   ├── TripTemplates.tsx
+│       │   ├── Calendar.tsx
+│       │   ├── Maintenance.tsx
+│       │   ├── Expenses.tsx
+│       │   ├── Notifications.tsx
+│       │   ├── DriverPerformance.tsx
+│       │   └── Analytics.tsx
+│       ├── services/
+│       │   └── api.ts           # Axios instance, JWT interceptors
+│       └── utils/
+│           └── helpers.ts       # Utility functions
 ```
 
 ---
@@ -333,41 +348,69 @@ The following implementation is complete and verified as working:
 
 ### 9.1. Backend Implementation Details
 - **Run Entrypoint**: `backend/run.py` (runs Flask app on port `5000` with `host='0.0.0.0'`).
-- **Database File**: SQLite database file located at `/home/shifan/Learning/Personal-Projs/TransitOps/backend/transitops.db`.
-- **Database Seeder**: `backend/seed.py` seeds tables and default operator logins.
+- **Database File**: SQLite database file created at `backend/instance/transitops.db`. Auto-created + auto-seeded on first launch via `create_app()`.
+- **Database Seeder**: Auto-seeding in `backend/__init__.py` on startup (`backend/seed.py` is legacy). All seed data created programmatically.
 - **Seeded Sandbox Credentials (Password: `transitops123` for all)**:
   - **Fleet Manager**: `manager@transitops.com`
   - **Driver**: `driver@transitops.com`
   - **Safety Officer**: `safety@transitops.com`
   - **Financial Analyst**: `analyst@transitops.com`
-- **CORS Config**: Configured explicitly in `backend/app/__init__.py` to allow `Content-Type` and `Authorization` headers.
+- **CORS Config**: Configured in `backend/config.py` via `CORS_ORIGINS` env var (defaults to `http://localhost:5173`). Restrictive, not wildcard `*`.
+- **Security Hardening**:
+  - Secrets derived from `os.urandom` / environment variables (no hardcoded values).
+  - Rate limiting via Flask-Limiter (in-memory): 5/min register, 10/min login, 50/hr global.
+  - JWT error handlers return consistent `{"message": "..."}` format.
+  - All alert endpoints secured with `@jwt_required()` (were previously public).
+- **SQLAlchemy 2.0 Migration**: All 10 route files use modern `db.session.execute(db.select(Model))` patterns (8 original files migrated, 2 new files created with the modern pattern from scratch). N+1 query in analytics (`get_vehicle_reports`) fixed (1+N×6 → 6 aggregated GROUP BY queries). All route functions annotated with Python type hints.
+- **Database Indexes**: Added to frequently filtered columns: `status`, `type`, `vehicle_id`, `driver_id`, `expense_type`.
+- **New Models**: `TripTemplate` (saved routes for recurring use), `Booking` (trip bookings).
+- **New Route Files**: `backend/routes/trip_templates.py` (CRUD), `backend/routes/bookings.py` (POST).
+- **Analytics Extension**: `GET /api/analytics/driver-performance` endpoint added.
+- **Bug Fix — Notifications Tab**: Alerts list route changed from `@bp.route('/')` to `@bp.route('')` (removed trailing slash). Frontend calls `GET /api/alerts`; the 308 redirect from `/api/alerts/` was stripping the JWT `Authorization` header.
+- **Data Shape Fixes**:
+  - `Trip.to_dict()`: now returns flat `route_name`, `driver_name`, `vehicle_reg`, `date` fields.
+  - `Alert.to_dict()`: now includes `title`, `alert_type`, `level` aliases for frontend compatibility.
 - **Relational Integrity**: Relational constraints enforce cascading operations safely based on active trip mappings.
 
 ### 9.2. Frontend Implementation Details
 - **Vite 8 Dev Server**: Runs on port `5173`.
-- **Vite Native Rolldown Bindings**: Installed `@rolldown/binding-linux-x64-gnu` natively to resolve Vite 8 build steps.
 - **Tailwind CSS v4 Integration**: Uses `@tailwindcss/postcss` and `postcss.config.js` to compile custom imports and variables.
-- **Authentication**: `AuthContext.jsx` manages login hooks and intercepts Axios requests to inject JWT.
+- **Authentication**: `AuthContext.tsx` manages login hooks, JWT storage/refresh, and intercepts Axios requests to inject tokens.
+- **Theme Support**: `ThemeContext.tsx` manages light/dark mode toggle; Dark Reader is locked out to prevent double-inversion.
+- **Code Cleanup**:
+  - `App.css`: emptied entirely (all classes unused).
+  - `index.css`: trimmed to only `animate-fade-in` keyframes.
+  - 7 unused packages removed from `package.json`: `@radix-ui/*`, `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`.
+  - 3 orphaned assets deleted.
+  - Redundant `__init__` constructors removed from all SQLAlchemy model classes.
+- **Window Reload Removal**: 11 `window.location.reload()` calls across 4 pages (Trips, Maintenance, Expenses, Calendar) replaced with API refetch via extracted `fetchData()`.
+- **Dark Reader Compatibility**: Added `<meta name="darkreader-lock" content="no-darkreader">` in `index.html` and `html { darkreader-skip: true }` in `index.css` to prevent double-inversion on the already-dark UI.
+- **Documentation**: `README.md` updated with Getting Started instructions and sandbox credentials table.
+- **All 5 backend tests pass** using isolated TestConfig with in-memory SQLite.
 - **Custom Pages**:
-  - `Login.jsx`: Login page with sandbox credential cards for quick profile switches.
-  - `Dashboard.jsx`: Features real-time fleet utilization charts, trip counts, and status breakdowns.
-  - `Vehicles.jsx`: Full vehicle assets database, CRUD, and status details.
-  - `Drivers.jsx`: Operator roster and license tracking highlighting expired entries.
-  - `Trips.jsx`: Workspace with weight validation (cargo weight vs vehicle capacity) and status flow timelines (Draft -> Dispatched -> Completed).
-  - `Maintenance.jsx`: Tickets board to request repairs, put vehicles "In Shop", and close orders to generate invoices.
-  - `Expenses.jsx`: Aggregated ledger separating fuel receipts, repair costs, and general outlays.
-  - `Analytics.jsx`: Fleet performance matrices calculating ROI, fuel efficiency (km/L), with an exporter for CSV data.
+  - `Login.tsx`: Login page with sandbox credential cards for quick profile switches.
+  - `Register.tsx`: User self-registration form.
+  - `Dashboard.tsx`: Features real-time fleet utilization charts, trip counts, and status breakdowns.
+  - `Vehicles.tsx`: Full vehicle assets database, CRUD, and status details.
+  - `Drivers.tsx`: Operator roster and license tracking highlighting expired entries.
+  - `Trips.tsx`: Workspace with weight validation (cargo weight vs vehicle capacity) and status flow timelines (Draft → Dispatched → Completed).
+  - `TripTemplates.tsx`: Saved route templates with "Use" button that fills trip form; field mapping fixed (`route_name` → `source`/`destination`).
+  - `Calendar.tsx`: Schedule view with trip/maintenance events.
+  - `Maintenance.tsx`: Tickets board to request repairs, put vehicles "In Shop", and close orders to generate invoices.
+  - `Expenses.tsx`: Aggregated ledger separating fuel receipts, repair costs, and general outlays.
+  - `Notifications.tsx`: Alerts list with read/unread status and delete capability.
+  - `DriverPerformance.tsx`: Driver safety scores, efficiency trends, and comparison charts.
+  - `Analytics.tsx`: Fleet performance matrices calculating ROI, fuel efficiency (km/L), with an exporter for CSV data.
 
-## New feature suggestions (ordered by impact/effort)
-| Priority | Feature | Why |
-| :--- | :--- | :--- |
-| High | Pagination + Search + Filters | List pages become unusable with >50 records |
-| High | Notifications / Alerts | In-app alerts for license expiry, maintenance due, trip completion — core ops requirement |
-| Medium | Calendar / Schedule View | Drag-drop trip & maintenance scheduling on a calendar |
-| Medium | Document Upload | Attach invoices, repair receipts, license PDFs to expenses/maintenance/drivers |
-| Medium | Driver Performance Dashboard | Safety score trends, efficiency comparisons, violation tracking |
-| Low | Dark Mode | Theme toggle across all pages |
-| Low | Recurring Trips / Templates | Save common routes as templates and schedule recurring dispatches |
-| Low | Swagger / OpenAPI Docs | Auto-generated API docs for frontend and third-party integration |
+## Feature suggestions (ordered by impact/effort)
+| Priority | Feature | Status | Why |
+| :--- | :--- | :--- | :--- |
+| High | Pagination + Search + Filters | Pending | List pages become unusable with >50 records |
+| High | Notifications / Alerts | Done | In-app alerts via `/api/alerts` with read/unread, auto-polling in Layout |
+| Medium | Calendar / Schedule View | Done | Calendar.tsx with trip & maintenance events |
+| Medium | Document Upload | Pending | Attach invoices, repair receipts, license PDFs to expenses/maintenance/drivers |
+| Medium | Driver Performance Dashboard | Done | `GET /api/analytics/driver-performance` endpoint |
+| Medium | Recurring Trips / Templates | Done | TripTemplate model + CRUD routes + TripTemplates.tsx page |
+| Low | Swagger / OpenAPI Docs | Pending | Auto-generated API docs for frontend and third-party integration |
 
 

@@ -1,9 +1,13 @@
-from app import create_app
-from app.extensions import db
-from app.models.user import User
-from app.models.vehicle import Vehicle
-from app.models.driver import Driver
-from app.models.alert import Alert
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from backend import create_app
+from backend.extensions import db
+from backend.models.user import User
+from backend.models.vehicle import Vehicle
+from backend.models.driver import Driver
+from backend.models.alert import Alert
 from datetime import date, timedelta
 
 app = create_app()

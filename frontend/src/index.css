@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+html {
+  darkreader-skip: true;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -125,62 +129,6 @@
   }
 }
 
-/* Custom animations for smooth card interactions */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Added barSlideUp animation for modern analytics chart */
-@keyframes barSlideUp {
-  from {
-    transform: scaleY(0);
-    opacity: 0;
-  }
-  to {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-}
-
-@keyframes pulse-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(66, 153, 225, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(66, 153, 225, 0);
-  }
-}
-
-/* Added shimmer and fade-in animations for chart interactions */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -190,19 +138,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-slide-in-up {
-  animation: slideInUp 0.5s ease-out forwards;
-}
-
-/* Added utility classes for new animations */
-.animate-shimmer {
-  animation: shimmer 1.5s ease-in-out infinite;
 }
 
 .animate-fade-in {
